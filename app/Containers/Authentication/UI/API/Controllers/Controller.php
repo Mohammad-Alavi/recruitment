@@ -101,4 +101,20 @@ class Controller extends ApiController
 
     return $this->json($result['response_content'])->withCookie($result['refresh_cookie']);
   }
+
+  public function proxyRefreshForAdminMobileClient(RefreshRequest $request): JsonResponse
+  {
+    $dataTransporter = new ProxyRefreshTransporter(
+      array_merge($request->all(), [
+        'client_id'       => Config::get('authentication-container.clients.mobile.admin.id'),
+        'client_password' => Config::get('authentication-container.clients.mobile.admin.secret'),
+        // use the refresh token sent in request data, if not exist try to get it from the cookie
+        'refresh_token'   => $request->refresh_token ? : $request->cookie('refreshToken'),
+      ])
+    );
+
+    $result = Apiato::call('Authentication@ProxyApiRefreshAction', [$dataTransporter]);
+
+    return $this->json($result['response-content'])->withCookie($result['refresh-cookie']);
+  }
 }
