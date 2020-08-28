@@ -4,10 +4,13 @@ namespace App\Containers\User\Models;
 
 use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
+use App\Containers\Country\Models\Country;
 use App\Containers\Payment\Contracts\ChargeableInterface;
 use App\Containers\Payment\Models\PaymentAccount;
 use App\Containers\Payment\Traits\ChargeableTrait;
 use App\Ship\Parents\Models\UserModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -40,6 +43,9 @@ class User extends UserModel implements ChargeableInterface
         'email',
         'password',
         'device',
+        'country_id',
+        'national_code',
+        'foreign_national_code',
         'platform',
         'gender',
         'birth',
@@ -59,6 +65,7 @@ class User extends UserModel implements ChargeableInterface
     protected $casts = [
         'is_client' => 'boolean',
         'confirmed' => 'boolean',
+        'country_id' => 'integer',
     ];
 
     /**
@@ -82,12 +89,14 @@ class User extends UserModel implements ChargeableInterface
         'remember_token',
     ];
 
-  /**
-   * @return \Illuminate\Database\Eloquent\Relations\HasMany
-   */
-    public function paymentAccounts()
+    public function paymentAccounts(): HasMany
     {
         return $this->hasMany(PaymentAccount::class);
     }
 
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->boolean('confirmed')->default(false);
             $table->string('gender')->nullable();
+            $table->unsignedInteger('country_id');
+//            $table->foreign('country_id')->references('id')->on('countries')->cascadeOnDelete();
+            $table->string('national_code')->unique()->nullable();
+            $table->string('foreign_national_code')->unique()->nullable();
             $table->string('birth')->nullable();
             $table->string('device')->nullable();
             $table->string('platform')->nullable();

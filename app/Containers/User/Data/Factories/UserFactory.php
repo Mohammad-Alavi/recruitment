@@ -1,17 +1,18 @@
 <?php
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 $factory->define(App\Containers\User\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name'           => $faker->name,
-        'email'          => $faker->unique()->safeEmail,
-        'password'       => $password ? : $password = Hash::make('testing-password'),
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'country_id' => $faker->numberBetween(1, 200),
+        'password' => $password ?: $password = Hash::make('testing-password'),
         'remember_token' => Str::random(10),
-        'is_client'      => false,
+        'is_client' => false,
     ];
 });
 

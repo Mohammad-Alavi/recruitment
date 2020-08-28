@@ -20,6 +20,8 @@ class UserRepository extends Repository
         'id'         => '=',
         'email'      => '=',
         'confirmed'  => '=',
+        'national_code'  => '=',
+        'foreign_national_code'  => '=',
         'created_at' => 'like',
     ];
 

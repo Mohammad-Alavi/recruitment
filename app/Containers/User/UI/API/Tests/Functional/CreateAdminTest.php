@@ -23,37 +23,27 @@ class CreateAdminTest extends ApiTestCase
         'roles'       => '',
     ];
 
-    /**
-     * @test
-     */
-    public function testCreateAdmin_()
+    public function testCreateAdmin(): void
     {
         $data = [
             'email'    => 'apiato@admin.test',
-            'name'     => 'admin',
+            'country_id'     => 1,
+            'national_code'     => "1810090997",
             'password' => 'secret',
         ];
 
-        // send the HTTP request
         $response = $this->makeCall($data);
-
-        // assert response status is correct
         $response->assertStatus(200);
 
         $this->assertResponseContainKeyValue([
             'email' => $data['email'],
-            'name'  => $data['name'],
+            'country_id'  => $data['country_id'],
+            'national_code'  => $data['national_code'],
         ]);
-
-        // assert response contain the token
         $this->assertResponseContainKeys(['id']);
-
-        // assert the data is stored in the database
         $this->assertDatabaseHas('users', ['email' => $data['email']]);
-
         $user = User::where(['email' => $data['email']])->first();
-
-        $this->assertEquals($user->is_client, false);
+        $this->assertEquals(false, $user->is_client);
     }
 
 }
