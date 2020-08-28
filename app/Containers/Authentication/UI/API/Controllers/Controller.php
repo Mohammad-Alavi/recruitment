@@ -10,6 +10,7 @@ use App\Containers\Authentication\UI\API\Requests\LogoutRequest;
 use App\Containers\Authentication\UI\API\Requests\RefreshRequest;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 
@@ -24,7 +25,7 @@ class Controller extends ApiController
     /**
      * @param \App\Containers\Authentication\UI\API\Requests\LogoutRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function logout(LogoutRequest $request)
     {
@@ -48,7 +49,7 @@ class Controller extends ApiController
      *
      * @param \App\Containers\Authentication\UI\API\Requests\LoginRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function proxyLoginForAdminWebClient(LoginRequest $request)
     {
@@ -69,7 +70,7 @@ class Controller extends ApiController
      *
      * @param \App\Containers\Authentication\UI\API\Requests\RefreshRequest $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function proxyRefreshForAdminWebClient(RefreshRequest $request)
     {
@@ -86,4 +87,34 @@ class Controller extends ApiController
 
         return $this->json($result['response-content'])->withCookie($result['refresh-cookie']);
     }
+
+  public function proxyLoginForAdminMobileClient(LoginRequest $request): JsonResponse
+  {
+    $dataTransporter = new ProxyApiLoginTransporter(
+      array_merge($request->all(), [
+        'client_id'       => Config::get('authentication-container.clients.mobile.admin.id'),
+        'client_password' => Config::get('authentication-container.clients.mobile.admin.secret')
+      ])
+    );
+
+    $result = Apiato::call('Authentication@ProxyApiLoginAction', [$dataTransporter]);
+
+    return $this->json($result['response_content'])->withCookie($result['refresh_cookie']);
+  }
+
+  public function proxyRefreshForAdminMobileClient(RefreshRequest $request): JsonResponse
+  {
+    $dataTransporter = new ProxyRefreshTransporter(
+      array_merge($request->all(), [
+        'client_id'       => Config::get('authentication-container.clients.mobile.admin.id'),
+        'client_password' => Config::get('authentication-container.clients.mobile.admin.secret'),
+        // use the refresh token sent in request data, if not exist try to get it from the cookie
+        'refresh_token'   => $request->refresh_token ? : $request->cookie('refreshToken'),
+      ])
+    );
+
+    $result = Apiato::call('Authentication@ProxyApiRefreshAction', [$dataTransporter]);
+
+    return $this->json($result['response-content'])->withCookie($result['refresh-cookie']);
+  }
 }

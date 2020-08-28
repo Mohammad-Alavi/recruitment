@@ -21,13 +21,7 @@ class CallOAuthServerTask extends Task
      */
     CONST AUTH_ROUTE = '/v1/oauth/token';
 
-    /**
-     * @param $data
-     *
-     * @return  array
-     * @throws \App\Containers\Authentication\Exceptions\LoginFailedException
-     */
-    public function run($data)
+    public function run($data): array
     {
         // Full url to the oauth token endpoint
         $authFullApiUrl = Config::get('apiato.api.url') . self::AUTH_ROUTE;
