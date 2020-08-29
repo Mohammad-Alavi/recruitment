@@ -25,38 +25,47 @@ class CreateUserByCredentialsTask extends Task
     }
 
     /**
-     * @param bool        $isClient
-     * @param string      $email
-     * @param string      $password
+     * @param bool $isClient
+     * @param string $email
+     * @param string $password
+     * @param int $countryId
+     * @param string|null $national_code
+     * @param string|null $foreign_national_code
      * @param string|null $name
      * @param string|null $gender
      * @param string|null $birth
      *
      * @return  mixed
-     * @throws  CreateResourceFailedException
      */
     public function run(
         bool $isClient = true,
         string $email,
         string $password,
+        int $countryId,
         string $name = null,
+        string $national_code = null,
+        string $foreign_national_code = null,
         string $gender = null,
         string $birth = null
-    ): User {
+    ): User
+    {
 
         try {
             // create new user
             $user = $this->repository->create([
-                'password'  => Hash::make($password),
-                'email'     => $email,
-                'name'      => $name,
-                'gender'    => $gender,
-                'birth'     => $birth,
+                'password' => Hash::make($password),
+                'email' => $email,
+                'country_id' => $countryId,
+                'name' => $name,
+                'national_code' => $national_code,
+                'foreign_national_code' => $foreign_national_code,
+                'gender' => $gender,
+                'birth' => $birth,
                 'is_client' => $isClient,
             ]);
 
         } catch (Exception $e) {
-            throw (new CreateResourceFailedException())->debug($e);
+            throw (new CreateResourceFailedException($e->getMessage()));
         }
 
         return $user;

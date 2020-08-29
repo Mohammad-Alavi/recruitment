@@ -21,20 +21,16 @@ use Illuminate\Support\Facades\Notification;
  */
 class RegisterUserAction extends Action
 {
-
-    /**
-     * @param \App\Ship\Transporters\DataTransporter $data
-     *
-     * @return  \App\Containers\User\Models\User
-     */
     public function run(DataTransporter $data): User
     {
-        // create user record in the database and return it.
         $user = Apiato::call('User@CreateUserByCredentialsTask', [
             $isClient = true,
             $data->email,
             $data->password,
+            $data->country_id,
             $data->name,
+            $data->national_code,
+            $data->foreign_national_code,
             $data->gender,
             $data->birth
         ]);

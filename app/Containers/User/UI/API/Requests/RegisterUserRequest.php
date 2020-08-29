@@ -3,6 +3,7 @@
 namespace App\Containers\User\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class RegisterUserRequest.
@@ -19,7 +20,7 @@ class RegisterUserRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -41,22 +42,37 @@ class RegisterUserRequest extends Request
 
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
+        Validator::extend('validate_national_code', function ($attribute, $value, $parameters) {
+            return $this->isValidIranianNationalCode($value);
+        });
+
         return [
-            'email'    => 'required|email|max:40|unique:users,email',
+            'email' => 'required|email|max:40|unique:users,email',
             'password' => 'required|min:6|max:30',
-            'name'     => 'required|min:2|max:50',
+            'country_id' => 'required|exists:countries,id',
+            'national_code' => 'bail|requiredIf:country_id,1|validate_national_code',
+            'foreign_national_code' => 'required_unless:country_id,1|size:13',
+            'name' => 'min:2|max:50',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    private function isValidIranianNationalCode($input): bool
+    {
+        if (!preg_match("/^\d{10}$/", $input)) {
+            return false;
+        }
+
+        $check = (int)$input[9];
+        $sum = array_sum(array_map(static function ($x) use ($input) {
+                return ((int)$input[$x]) * (10 - $x);
+            }, range(0, 8))) % 11;
+
+        return ($sum < 2 && $check == $sum) || ($sum >= 2 && $check + $sum == 11);
+    }
+
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',
