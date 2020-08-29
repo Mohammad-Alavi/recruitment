@@ -8,6 +8,7 @@ use App\Containers\Country\Models\Country;
 use App\Containers\Payment\Contracts\ChargeableInterface;
 use App\Containers\Payment\Models\PaymentAccount;
 use App\Containers\Payment\Traits\ChargeableTrait;
+use App\Containers\Skill\Models\Skill;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -104,5 +105,10 @@ class User extends UserModel implements ChargeableInterface
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function skills(): HasMany
+    {
+        return $this->hasMany(Skill::class);
     }
 }
