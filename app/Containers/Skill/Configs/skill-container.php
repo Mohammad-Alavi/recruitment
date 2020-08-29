@@ -11,4 +11,9 @@ return [
     |
     */
 
+    "skill_levels" => [
+        'low',
+        'medium',
+        'high',
+    ]
 ];

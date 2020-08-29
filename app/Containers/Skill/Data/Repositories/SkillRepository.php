@@ -15,7 +15,7 @@ class SkillRepository extends Repository
      */
     protected $fieldSearchable = [
         'id' => '=',
-        // ...
+        'name' => '=',
     ];
 
 }

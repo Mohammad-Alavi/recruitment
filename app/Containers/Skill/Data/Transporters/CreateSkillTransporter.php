@@ -14,14 +14,23 @@ class CreateSkillTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'user_id',
+            'name',
+            'skill_level',
+            'from_date',
+            'to_date',
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
+            'user_id',
+            'name',
+            'skill_level',
+            'from_date',
+            'to_date',
             // define the properties that MUST be set
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

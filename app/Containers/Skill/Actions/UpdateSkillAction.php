@@ -2,20 +2,21 @@
 
 namespace App\Containers\Skill\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Skill\Data\Transporters\UpdateSkillTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class UpdateSkillAction extends Action
 {
-    public function run(Request $request)
+    public function run(UpdateSkillTransporter $request)
     {
         $data = $request->sanitizeInput([
-            // add your request data here
+            'name',
+            'skill_level',
+            'from_date',
+            'to_date',
         ]);
 
-        $skill = Apiato::call('Skill@UpdateSkillTask', [$request->id, $data]);
-
-        return $skill;
+        return Apiato::call('Skill@UpdateSkillTask', [$request->skill_id, $data]);
     }
 }

@@ -2,16 +2,14 @@
 
 namespace App\Containers\Skill\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Skill\Data\Transporters\FindSkillByIdTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class FindSkillByIdAction extends Action
 {
-    public function run(Request $request)
+    public function run(FindSkillByIdTransporter $request)
     {
-        $skill = Apiato::call('Skill@FindSkillByIdTask', [$request->id]);
-
-        return $skill;
+        return Apiato::call('Skill@FindSkillByIdTask', [$request->skill_id]);
     }
 }

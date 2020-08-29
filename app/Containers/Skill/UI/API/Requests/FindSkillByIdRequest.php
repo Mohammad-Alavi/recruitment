@@ -2,6 +2,7 @@
 
 namespace App\Containers\Skill\UI\API\Requests;
 
+use App\Containers\Skill\Data\Transporters\FindSkillByIdTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class FindSkillByIdRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\Skill\Data\Transporters\FindSkillByIdTransporter::class;
+    protected $transporter = FindSkillByIdTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class FindSkillByIdRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,8 @@ class FindSkillByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'skill_id',
     ];
 
     /**
@@ -43,24 +45,19 @@ class FindSkillByIdRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'skill_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'skill_id' => 'required|exists:skills,id',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

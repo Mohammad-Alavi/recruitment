@@ -2,74 +2,50 @@
 
 namespace App\Containers\Skill\UI\API\Controllers;
 
+use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Skill\Data\Transporters\CreateSkillTransporter;
+use App\Containers\Skill\Data\Transporters\DeleteSkillTransporter;
+use App\Containers\Skill\Data\Transporters\FindSkillByIdTransporter;
+use App\Containers\Skill\Data\Transporters\GetAllSkillsTransporter;
+use App\Containers\Skill\Data\Transporters\UpdateSkillTransporter;
 use App\Containers\Skill\UI\API\Requests\CreateSkillRequest;
 use App\Containers\Skill\UI\API\Requests\DeleteSkillRequest;
-use App\Containers\Skill\UI\API\Requests\GetAllSkillsRequest;
 use App\Containers\Skill\UI\API\Requests\FindSkillByIdRequest;
+use App\Containers\Skill\UI\API\Requests\GetAllSkillsRequest;
 use App\Containers\Skill\UI\API\Requests\UpdateSkillRequest;
 use App\Containers\Skill\UI\API\Transformers\SkillTransformer;
 use App\Ship\Parents\Controllers\ApiController;
-use Apiato\Core\Foundation\Facades\Apiato;
+use Illuminate\Http\JsonResponse;
 
-/**
- * Class Controller
- *
- * @package App\Containers\Skill\UI\API\Controllers
- */
 class Controller extends ApiController
 {
-    /**
-     * @param CreateSkillRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function createSkill(CreateSkillRequest $request)
+    public function createSkill(CreateSkillRequest $request): JsonResponse
     {
-        $skill = Apiato::call('Skill@CreateSkillAction', [$request]);
-
+        $skill = Apiato::call('Skill@CreateSkillAction', [new CreateSkillTransporter($request)]);
         return $this->created($this->transform($skill, SkillTransformer::class));
     }
 
-    /**
-     * @param FindSkillByIdRequest $request
-     * @return array
-     */
-    public function findSkillById(FindSkillByIdRequest $request)
+    public function findSkillById(FindSkillByIdRequest $request): array
     {
-        $skill = Apiato::call('Skill@FindSkillByIdAction', [$request]);
-
+        $skill = Apiato::call('Skill@FindSkillByIdAction', [new FindSkillByIdTransporter($request)]);
         return $this->transform($skill, SkillTransformer::class);
     }
 
-    /**
-     * @param GetAllSkillsRequest $request
-     * @return array
-     */
-    public function getAllSkills(GetAllSkillsRequest $request)
+    public function getAllSkills(GetAllSkillsRequest $request): array
     {
-        $skills = Apiato::call('Skill@GetAllSkillsAction', [$request]);
-
+        $skills = Apiato::call('Skill@GetAllSkillsAction', [new GetAllSkillsTransporter($request)]);
         return $this->transform($skills, SkillTransformer::class);
     }
 
-    /**
-     * @param UpdateSkillRequest $request
-     * @return array
-     */
-    public function updateSkill(UpdateSkillRequest $request)
+    public function updateSkill(UpdateSkillRequest $request): array
     {
-        $skill = Apiato::call('Skill@UpdateSkillAction', [$request]);
-
+        $skill = Apiato::call('Skill@UpdateSkillAction', [new UpdateSkillTransporter($request)]);
         return $this->transform($skill, SkillTransformer::class);
     }
 
-    /**
-     * @param DeleteSkillRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function deleteSkill(DeleteSkillRequest $request)
+    public function deleteSkill(DeleteSkillRequest $request): JsonResponse
     {
-        Apiato::call('Skill@DeleteSkillAction', [$request]);
-
+        Apiato::call('Skill@DeleteSkillAction', [new DeleteSkillTransporter($request)]);
         return $this->noContent();
     }
 }

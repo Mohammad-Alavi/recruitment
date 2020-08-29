@@ -10,7 +10,7 @@ use Exception;
 class CreateSkillTask extends Task
 {
 
-    protected $repository;
+    protected SkillRepository $repository;
 
     public function __construct(SkillRepository $repository)
     {
@@ -23,7 +23,7 @@ class CreateSkillTask extends Task
             return $this->repository->create($data);
         }
         catch (Exception $exception) {
-            throw new CreateResourceFailedException();
+            throw new CreateResourceFailedException($exception->getMessage());
         }
     }
 }

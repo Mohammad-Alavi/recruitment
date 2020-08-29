@@ -2,7 +2,9 @@
 
 namespace App\Containers\Skill\UI\API\Requests;
 
+use App\Containers\Skill\Data\Transporters\UpdateSkillTransporter;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class UpdateSkillRequest.
@@ -15,7 +17,7 @@ class UpdateSkillRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\Skill\Data\Transporters\UpdateSkillTransporter::class;
+    protected $transporter = UpdateSkillTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +26,7 @@ class UpdateSkillRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +35,8 @@ class UpdateSkillRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'skill_id',
     ];
 
     /**
@@ -43,24 +46,25 @@ class UpdateSkillRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'skill_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
+        $availableSkillLevels = implode(',', Config::get('skill-container.skill_levels'));
+
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'skill_id' => 'required|exists:skills,id',
+            'name' => 'min:4|max:50',
+            'skill_level' => 'in:' . $availableSkillLevels,
+            'from_date' => 'date_format:Ymd',
+            'to_date' => 'date_format:Ymd',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

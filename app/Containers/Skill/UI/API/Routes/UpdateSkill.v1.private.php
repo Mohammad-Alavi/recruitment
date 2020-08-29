@@ -4,26 +4,26 @@
  * @apiGroup           Skill
  * @apiName            updateSkill
  *
- * @api                {PATCH} /v1/skills/:id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {PATCH} /v1/users/:user_id/skills/:skill_id Update Skill
+ * @apiDescription     Update User Skill
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      Authenticated
  *
  * @apiParam           {String}  parameters here..
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * {
+ * // Insert the response of the request here...
+ * }
  */
 
 /** @var Route $router */
-$router->patch('skills/{id}', [
+$router->patch('users/{user_id}/skills/{skill_id}', [
     'as' => 'api_skill_update_skill',
-    'uses'  => 'Controller@updateSkill',
+    'uses' => 'Controller@updateSkill',
     'middleware' => [
-      'auth:api',
+        'auth:api',
     ],
 ]);

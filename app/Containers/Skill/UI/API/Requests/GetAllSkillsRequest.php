@@ -2,6 +2,7 @@
 
 namespace App\Containers\Skill\UI\API\Requests;
 
+use App\Containers\Skill\Data\Transporters\GetAllSkillsTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class GetAllSkillsRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\Skill\Data\Transporters\GetAllSkillsTransporter::class;
+    protected $transporter = GetAllSkillsTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class GetAllSkillsRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,7 @@ class GetAllSkillsRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
     ];
 
     /**
@@ -43,24 +44,17 @@ class GetAllSkillsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

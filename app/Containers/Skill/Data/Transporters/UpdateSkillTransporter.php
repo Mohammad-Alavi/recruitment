@@ -14,14 +14,19 @@ class UpdateSkillTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'skill_id',
+            'name',
+            'skill_level',
+            'from_date',
+            'to_date',
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
+            'skill_id',
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];
