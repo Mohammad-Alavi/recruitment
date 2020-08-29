@@ -28,11 +28,8 @@ class RegisterUserAction extends Action
             $data->email,
             $data->password,
             $data->country_id,
-            $data->name,
             $data->national_code,
             $data->foreign_national_code,
-            $data->gender,
-            $data->birth
         ]);
 
         Mail::send(new UserRegisteredMail($user));

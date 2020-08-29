@@ -118,7 +118,7 @@ return [
         'name'                  => 'nombre',
         'username'              => 'usuario',
         'email'                 => 'correo electrónico',
-        'first_name'            => 'nombre',
+        'name'            => 'nombre',
         'last_name'             => 'apellido',
         'password'              => 'contraseña',
         'password_confirmation' => 'confirmación de la contraseña',

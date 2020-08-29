@@ -54,7 +54,6 @@ class CreateAdminRequest extends Request
             'country_id' => 'required|exists:countries,id',
             'national_code' => 'bail|requiredIf:country_id,1|validate_national_code',
             'foreign_national_code' => 'required_unless:country_id,1|size:13',
-            'name' => 'min:2|max:50',
         ];
     }
 

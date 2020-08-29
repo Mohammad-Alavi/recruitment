@@ -27,7 +27,6 @@ class CreateAdminAction extends Action
             $data->email,
             $data->password,
             $data->country_id,
-            null,
             $data->national_code
         ]);
 

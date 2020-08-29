@@ -118,7 +118,7 @@ return [
         'name'                  => 'الاسم',
         'username'              => 'اسم المُستخدم',
         'email'                 => 'البريد الالكتروني',
-        'first_name'            => 'الاسم',
+        'name'            => 'الاسم',
         'last_name'             => 'اسم العائلة',
         'password'              => 'كلمة  المرو',
         'password_confirmation' => 'تأكيد كلمة المرور',

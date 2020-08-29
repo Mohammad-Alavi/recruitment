@@ -3,6 +3,7 @@
 namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\User\Data\Transporters\UpdateUserTransporter;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserRequest;
 use App\Containers\User\UI\API\Requests\FindUserByIdRequest;
@@ -39,7 +40,7 @@ class Controller extends ApiController
 
     public function updateUser(UpdateUserRequest $request): array
     {
-        $user = Apiato::call('User@UpdateUserAction', [new DataTransporter($request)]);
+        $user = Apiato::call('User@UpdateUserAction', [new UpdateUserTransporter($request)]);
         return $this->transform($user, UserTransformer::class);
     }
 

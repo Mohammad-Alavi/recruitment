@@ -2,7 +2,9 @@
 
 namespace App\Containers\User\UI\API\Requests;
 
+use App\Containers\User\Data\Transporters\UpdateUserTransporter;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class UpdateUserRequest.
@@ -11,57 +13,46 @@ use App\Ship\Parents\Requests\Request;
  */
 class UpdateUserRequest extends Request
 {
+    protected $transporter = UpdateUserTransporter::class;
 
-    /**
-     * Define which Roles and/or Permissions has access to this request.
-     *
-     * @var  array
-     */
     protected $access = [
         'permissions' => 'update-users',
-        'roles'       => '',
+        'roles' => '',
     ];
 
-    /**
-     * Id's that needs decoding before applying the validation rules.
-     *
-     * @var  array
-     */
     protected $decode = [
         'id',
     ];
 
-    /**
-     * Defining the URL parameters (`/stores/999/items`) allows applying
-     * validation rules on them and allows accessing them like request data.
-     *
-     * @var  array
-     */
     protected $urlParameters = [
         'id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
+        $allowedGenders = implode(',', Config::get('user-container.valid_inputs.gender'));
+        $allowedMilitaryServicesStatus = implode(',', Config::get('user-container.valid_inputs.military_service_status'));
+        $allowedMartialStatus = implode(',', Config::get('user-container.valid_inputs.marital_status'));
+        $allowedEducationalCertificates = implode(',', Config::get('user-container.valid_inputs.last_educational_certificate'));
+        $allowedMethodOfIntroductions = implode(',', Config::get('user-container.valid_inputs.method_of_introduction'));
+
         return [
-            'email'    => 'email|unique:users,email',
-            'id'       => 'required|exists:users,id',
+            'id' => 'required|exists:users,id',
             'password' => 'min:6|max:40',
-            'name'     => 'min:2|max:50',
+            'name' => 'min:2|max:50',
+            'last_name' => 'min:2|max:50',
+            'birth' => 'date_format:Ymd',
+            'gender' => 'in:' . $allowedGenders,
+            'military_service_status' => 'in:' . $allowedMilitaryServicesStatus,
+            'marital_status' => 'in:' . $allowedMartialStatus,
+            'last_educational_certificate' => 'in:' . $allowedEducationalCertificates,
+            'field_of_study' => 'min:2|max:150',
+            'method_of_introduction' => 'in:' . $allowedMethodOfIntroductions,
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
-        // is this an admin who has access to permission `update-users`
-        // or the user is updating his own object (is the owner).
-
         return $this->check([
             'hasAccess|isOwner',
         ]);

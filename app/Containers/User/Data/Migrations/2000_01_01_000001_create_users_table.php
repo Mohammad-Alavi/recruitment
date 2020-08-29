@@ -15,12 +15,17 @@ class CreateUsersTable extends Migration
             $table->increments('id');
 
             $table->string('name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
             $table->boolean('confirmed')->default(false);
             $table->string('gender')->nullable();
+            $table->string('military_service_status')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->string('last_educational_certificate')->nullable();
+            $table->string('field_of_study')->nullable();
+            $table->string('method_of_introduction')->nullable();
             $table->unsignedInteger('country_id');
-//            $table->foreign('country_id')->references('id')->on('countries')->cascadeOnDelete();
             $table->string('national_code')->unique()->nullable();
             $table->string('foreign_national_code')->unique()->nullable();
             $table->string('birth')->nullable();

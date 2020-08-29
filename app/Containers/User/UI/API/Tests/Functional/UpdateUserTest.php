@@ -18,43 +18,50 @@ class UpdateUserTest extends ApiTestCase
     protected $endpoint = 'put@v1/users/{id}';
 
     protected $access = [
-        'roles'       => '',
+        'roles' => '',
         'permissions' => 'update-users',
     ];
 
-    /**
-     * @test
-     */
-    public function testUpdateExistingUser_()
+    public function testUpdateExistingUser(): void
     {
         $user = $this->getTestingUser();
 
         $data = [
-            'name'     => 'Updated Name',
+            'name' => 'Updated Name',
+            'last_name' => 'Updated last Name',
+            'birth' => '20081010',
+            'gender' => 'male',
+            'military_service_status' => 'done',
+            'marital_status' => 'married',
+            'last_educational_certificate' => 'master_degree',
+            'field_of_study' => 'نرم افزار',
+            'method_of_introduction' => 'social_media',
+            'device' => 'samsung-z10',
+            'platform' => 'mobile',
             'password' => 'updated#Password',
         ];
 
-        // send the HTTP request
         $response = $this->injectId($user->id)->makeCall($data);
 
-        // assert response status is correct
         $response->assertStatus(200);
-
-        // assert returned user is the updated one
         $this->assertResponseContainKeyValue([
             'object' => 'User',
-            'email'  => $user->email,
-            'name'   => $data['name'],
+            'email' => $user->email,
+            'name' => $data['name'],
+            'last_name' => $data['last_name'],
+            'birth' => $data['birth'],
+            'gender' => $data['gender'],
+            'military_service_status' => $data['military_service_status'],
+            'marital_status' => $data['marital_status'],
+            'last_educational_certificate' => $data['last_educational_certificate'],
+            'field_of_study' => $data['field_of_study'],
+            'method_of_introduction' => $data['method_of_introduction'],
         ]);
 
-        // assert data was updated in the database
         $this->assertDatabaseHas('users', ['name' => $data['name']]);
     }
 
-    /**
-     * @test
-     */
-    public function testUpdateNonExistingUser_()
+    public function testUpdateNonExistingUser(): void
     {
         $data = [
             'name' => 'Updated Name',
@@ -62,10 +69,8 @@ class UpdateUserTest extends ApiTestCase
 
         $fakeUserId = 7777;
 
-        // send the HTTP request
         $response = $this->injectId($fakeUserId)->makeCall($data);
 
-        // assert response status is correct
         $response->assertStatus(422);
 
         $this->assertResponseContainKeyValue([
@@ -73,15 +78,10 @@ class UpdateUserTest extends ApiTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function testUpdateExistingUserWithoutData_()
+    public function testUpdateExistingUserWithoutData(): void
     {
-        // send the HTTP request
         $response = $this->makeCall();
 
-        // assert response status is correct
         $response->assertStatus(422);
 
         $this->assertResponseContainKeyValue([
@@ -89,26 +89,20 @@ class UpdateUserTest extends ApiTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function testUpdateExistingUserWithEmptyValues()
+    public function testUpdateExistingUserWithEmptyValues(): void
     {
         $data = [
-            'name'     => '',
+            'name' => '',
             'password' => '',
         ];
 
-        // send the HTTP request
         $response = $this->makeCall($data);
 
-        // assert response status is correct
         $response->assertStatus(422);
 
         $this->assertValidationErrorContain([
-            // messages should be updated after modifying the validation rules, to pass this test
             'password' => 'The password must be at least 6 characters.',
-            'name'     => 'The name must be at least 2 characters.',
+            'name' => 'The name must be at least 2 characters.',
         ]);
 
     }

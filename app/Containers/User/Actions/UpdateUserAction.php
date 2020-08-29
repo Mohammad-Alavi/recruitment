@@ -3,9 +3,9 @@
 namespace App\Containers\User\Actions;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\User\Data\Transporters\UpdateUserTransporter;
 use App\Containers\User\Models\User;
 use App\Ship\Parents\Actions\Action;
-use App\Ship\Transporters\DataTransporter;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -15,31 +15,27 @@ use Illuminate\Support\Facades\Hash;
  */
 class UpdateUserAction extends Action
 {
-
-    /**
-     * @param \App\Ship\Transporters\DataTransporter $data
-     *
-     * @return  \App\Containers\User\Models\User
-     */
-    public function run(DataTransporter $data): User
+    public function run(UpdateUserTransporter $data): User
     {
-        $userData = [
-            'password'             => $data->password ? Hash::make($data->password) : null,
-            'name'                 => $data->name,
-            'email'                => $data->email,
-            'gender'               => $data->gender,
-            'birth'                => $data->birth,
-            'social_token'         => $data->token,
-            'social_expires_in'    => $data->expiresIn,
-            'social_refresh_token' => $data->refreshToken,
-            'social_token_secret'  => $data->tokenSecret,
-        ];
+        $userData = $data->sanitizeInput([
+            'password',
+            'gender',
+            'birth',
+            'name',
+            'last_name',
+            'marital_status',
+            'military_service_status',
+            'last_educational_certificate',
+            'field_of_study',
+            'method_of_introduction',
+            'device',
+            'platform',
+            'social_token',
+            'social_expires_in',
+            'social_refresh_token',
+            'social_token_secret',
+        ]);
 
-        // remove null values and their keys
-        $userData = array_filter($userData);
-
-        $user = Apiato::call('User@UpdateUserTask', [$userData, $data->id]);
-
-        return $user;
+        return Apiato::call('User@UpdateUserTask', [$userData, $data->id]);
     }
 }

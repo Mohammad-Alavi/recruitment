@@ -29,37 +29,45 @@ class UserPrivateProfileTransformer extends Transformer
     ];
 
     /**
-     * @param \App\Containers\User\Models\User $user
+     * @param User $user
      *
      * @return array
      */
     public function transform(User $user)
     {
         $response = [
-            'object'               => 'User',
-            'id'                   => $user->getHashedKey(),
-            'name'                 => $user->name,
-            'email'                => $user->email,
-            'confirmed'            => $user->confirmed,
-            'nickname'             => $user->nickname,
-            'gender'               => $user->gender,
-            'birth'                => $user->birth,
+            'object' => 'User',
+            'id' => $user->getHashedKey(),
+            'name' => $user->name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'marital_status' => $user->marital_status,
+            'military_service_status' => $user->military_service_status,
+            'last_educational_certificate' => $user->last_educational_certificate,
+            'field_of_study' => $user->field_of_study,
+            'method_of_introduction' => $user->method_of_introduction,
+            'country_id' => $user->country_id,
+            'national_code' => $user->national_code,
+            'foreign_national_code' => $user->foreign_national_code,
+            'confirmed' => $user->confirmed,
+            'gender' => $user->gender,
+            'birth' => $user->birth,
 
             'social_auth_provider' => $user->social_provider,
-            'social_id'            => $user->social_id,
-            'social_avatar'        => [
-                'avatar'   => $user->social_avatar,
+            'social_id' => $user->social_id,
+            'social_avatar' => [
+                'avatar' => $user->social_avatar,
                 'original' => $user->social_avatar_original,
             ],
 
-            'created_at'           => $user->created_at,
-            'updated_at'           => $user->updated_at,
-            'readable_created_at'  => $user->created_at->diffForHumans(),
-            'readable_updated_at'  => $user->updated_at->diffForHumans(),
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+            'readable_created_at' => $user->created_at->diffForHumans(),
+            'readable_updated_at' => $user->updated_at->diffForHumans(),
         ];
 
         $response = $this->ifAdmin([
-            'real_id'    => $user->id,
+            'real_id' => $user->id,
             'deleted_at' => $user->deleted_at,
         ], $response);
 

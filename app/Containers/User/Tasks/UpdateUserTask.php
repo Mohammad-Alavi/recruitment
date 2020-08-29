@@ -10,6 +10,7 @@ use App\Ship\Exceptions\UpdateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UpdateUserTask.
@@ -18,29 +19,22 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  */
 class UpdateUserTask extends Task
 {
-
-    protected $repository;
+    protected UserRepository $repository;
 
     public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    /**
-     * @param $userData
-     * @param $userId
-     *
-     * @return mixed
-     * @throws InternalErrorException
-     * @throws NotFoundException
-     * @throws UpdateResourceFailedException
-     *
-     * @return  \App\Containers\User\Models\User
-     */
     public function run($userData, $userId): User
     {
         if (empty($userData)) {
             throw new UpdateResourceFailedException('Inputs are empty.');
+        }
+
+        // Hash the password if exist
+        if (array_key_exists('password', $userData)) {
+            $userData['password'] = Hash::make($userData['password']);
         }
 
         try {
@@ -53,5 +47,4 @@ class UpdateUserTask extends Task
 
         return $user;
     }
-
 }

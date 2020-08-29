@@ -37,10 +37,7 @@ class DeleteUserTest extends ApiTestCase
         $response->assertStatus(204);
     }
 
-    /**
-     * @test
-     */
-    public function testDeleteAnotherExistingUser_()
+    public function testDeleteAnotherExistingUser(): void
     {
         // make the call form the user token who has no access
         $this->getTestingUserWithoutAccess();

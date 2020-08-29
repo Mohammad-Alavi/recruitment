@@ -127,14 +127,18 @@ trait TestsAuthHelperTrait
      */
     private function prepareUserDetails($userDetails = null)
     {
-        $defaultUserDetails = [
-            'name'     => $this->faker->name,
+	    $countryId = $this->faker->numberBetween(1, 200);
+
+	    $defaultUserDetails = [
             'email'    => $this->faker->email,
             'password' => 'testing-password',
+	        'country_id' => $countryId,
+	        'national_code' => $countryId === 1 ? 1810090988 : null,
+	        'foreign_national_code' => $countryId === 1 ? null : $this->faker->shuffleString("1234567891234"),
         ];
 
         // if no user detail provided, use the default details, to find the password or generate one before encoding it
-        return $this->prepareUserPassword($userDetails ? : $defaultUserDetails);;
+        return $this->prepareUserPassword($userDetails ? : $defaultUserDetails);
     }
 
     /**

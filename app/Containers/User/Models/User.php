@@ -40,6 +40,7 @@ class User extends UserModel implements ChargeableInterface
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
         'password',
         'device',
@@ -49,6 +50,11 @@ class User extends UserModel implements ChargeableInterface
         'platform',
         'gender',
         'birth',
+        'marital_status',
+        'military_service_status',
+        'last_educational_certificate',
+        'field_of_study',
+        'method_of_introduction',
         'social_provider',
         'social_token',
         'social_refresh_token',
