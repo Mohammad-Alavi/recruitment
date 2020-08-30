@@ -19,6 +19,6 @@ class GetAllSkillsTask extends Task
     public function run($id)
     {
         $this->repository->pushCriteria(new ThisEqualThatCriteria('user_id', $id));
-        return $this->repository->paginate();
+        return $this->repository->all();
     }
 }
