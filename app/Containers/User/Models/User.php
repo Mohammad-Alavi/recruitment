@@ -5,6 +5,7 @@ namespace App\Containers\User\Models;
 use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
 use App\Containers\Country\Models\Country;
+use App\Containers\DesiredJob\Models\DesiredJob;
 use App\Containers\Payment\Contracts\ChargeableInterface;
 use App\Containers\Payment\Models\PaymentAccount;
 use App\Containers\Payment\Traits\ChargeableTrait;
@@ -110,5 +111,10 @@ class User extends UserModel implements ChargeableInterface
     public function skills(): HasMany
     {
         return $this->hasMany(Skill::class);
+    }
+
+    public function desiredJobs(): HasMany
+    {
+        return $this->hasMany(DesiredJob::class);
     }
 }

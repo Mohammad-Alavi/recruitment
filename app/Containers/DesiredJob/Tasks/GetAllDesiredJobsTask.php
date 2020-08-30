@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Containers\Skill\Tasks;
+namespace App\Containers\DesiredJob\Tasks;
 
-use App\Containers\Skill\Data\Repositories\SkillRepository;
+use App\Containers\DesiredJob\Data\Repositories\DesiredJobRepository;
 use App\Ship\Criterias\Eloquent\ThisEqualThatCriteria;
 use App\Ship\Parents\Tasks\Task;
 
-class GetAllSkillsTask extends Task
+class GetAllDesiredJobsTask extends Task
 {
 
-    protected $repository;
+    protected DesiredJobRepository $repository;
 
-    public function __construct(SkillRepository $repository)
+    public function __construct(DesiredJobRepository $repository)
     {
         $this->repository = $repository;
     }

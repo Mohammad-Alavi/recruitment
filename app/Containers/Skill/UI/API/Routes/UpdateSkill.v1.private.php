@@ -10,13 +10,12 @@
  * @apiVersion         1.0.0
  * @apiPermission      Authenticated
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam           {String} name min:4|max:50,
+ * @apiParam           {String="low,medium,high"} skill_level min:4|max:50,
+ * @apiParam           {String} from_date date_format:Ymd,
+ * @apiParam           {String} to_date date_format:Ymd,
  *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
- * {
- * // Insert the response of the request here...
- * }
+ * @apiUse             SkillSuccessSingleResponse
  */
 
 /** @var Route $router */

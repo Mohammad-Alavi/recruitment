@@ -8,15 +8,9 @@
  * @apiDescription     Get all Skills of the specified User
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      Authenticated
  *
- * @apiParam           {String}  parameters here..
- *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
- * {
- * // Insert the response of the request here...
- * }
+ * @apiUse             SkillsSuccessMultipleResponse
  */
 
 /** @var Route $router */

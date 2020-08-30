@@ -4,17 +4,13 @@
  * @apiGroup           Skill
  * @apiName            findSkillById
  *
- * @api                {GET} /v1/users/:user_id/skills/:skill_id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v1/users/:user_id/skills/:skill_id Find Skill By ID
+ * @apiDescription     Find Skill by Id
  *
  * @apiVersion         1.0.0
  * @apiPermission      Authenticated
  *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
- * {
- * // Insert the response of the request here...
- * }
+ * @apiUse             SkillSuccessSingleResponse
  */
 
 /** @var Route $router */
