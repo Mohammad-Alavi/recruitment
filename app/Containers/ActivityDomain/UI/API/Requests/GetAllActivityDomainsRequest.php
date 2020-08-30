@@ -2,6 +2,7 @@
 
 namespace App\Containers\ActivityDomain\UI\API\Requests;
 
+use App\Containers\ActivityDomain\Data\Transporters\GetAllActivityDomainsTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class GetAllActivityDomainsRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\ActivityDomain\Data\Transporters\GetAllActivityDomainsTransporter::class;
+    protected $transporter = GetAllActivityDomainsTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class GetAllActivityDomainsRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -46,10 +47,7 @@ class GetAllActivityDomainsRequest extends Request
         // 'id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             // 'id' => 'required',
@@ -57,10 +55,7 @@ class GetAllActivityDomainsRequest extends Request
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

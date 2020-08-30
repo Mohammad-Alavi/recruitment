@@ -3,10 +3,12 @@
 namespace App\Containers\ActivityDomain\Models;
 
 use App\Ship\Parents\Models\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ActivityDomain extends Model
+class ActivityDomainJob extends Model
 {
+    protected $table = 'activity_domain_jobs';
+
     protected $guarded = [];
 
     protected $attributes = [
@@ -29,10 +31,10 @@ class ActivityDomain extends Model
     /**
      * A resource key to be used by the the JSON API Serializer responses.
      */
-    protected $resourceKey = 'activitydomains';
+    protected $resourceKey = 'activitydomainjobs';
 
-    public function jobs(): HasMany
+    public function activityDomain(): BelongsTo
     {
-        return $this->hasMany(ActivityDomainJob::class);
+        return $this->belongsTo(ActivityDomain::class);
     }
 }

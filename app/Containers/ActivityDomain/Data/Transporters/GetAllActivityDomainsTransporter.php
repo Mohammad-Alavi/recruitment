@@ -18,10 +18,10 @@ class GetAllActivityDomainsTransporter extends Transporter
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

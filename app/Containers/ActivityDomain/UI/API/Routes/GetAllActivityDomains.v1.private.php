@@ -4,8 +4,8 @@
  * @apiGroup           ActivityDomain
  * @apiName            getAllActivityDomains
  *
- * @api                {GET} /v1/activity-domains Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v1/activity-domains Get All Activity Domains
+ * @apiDescription     Get all Activity Domains
  *
  * @apiVersion         1.0.0
  * @apiPermission      none
@@ -14,16 +14,13 @@
  *
  * @apiSuccessExample  {json}  Success-Response:
  * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * {
+ * // Insert the response of the request here...
+ * }
  */
 
 /** @var Route $router */
 $router->get('activity-domains', [
-    'as' => 'api_activitydomain_get_all_activity_domains',
-    'uses'  => 'Controller@getAllActivityDomains',
-    'middleware' => [
-      'auth:api',
-    ],
+    'as' => 'api_activity_domain_get_all_activity_domains',
+    'uses' => 'Controller@getAllActivityDomains',
 ]);

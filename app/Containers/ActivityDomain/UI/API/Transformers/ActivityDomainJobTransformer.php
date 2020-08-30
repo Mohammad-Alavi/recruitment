@@ -3,16 +3,17 @@
 namespace App\Containers\ActivityDomain\UI\API\Transformers;
 
 use App\Containers\ActivityDomain\Models\ActivityDomain;
+use App\Containers\ActivityDomain\Models\ActivityDomainJob;
 use App\Ship\Parents\Transformers\Transformer;
-use League\Fractal\Resource\Collection;
+use Vinkla\Hashids\Facades\Hashids;
 
-class ActivityDomainTransformer extends Transformer
+class ActivityDomainJobTransformer extends Transformer
 {
     /**
      * @var  array
      */
     protected $defaultIncludes = [
-        'jobs'
+
     ];
 
     /**
@@ -22,11 +23,12 @@ class ActivityDomainTransformer extends Transformer
 
     ];
 
-    public function transform(ActivityDomain $entity): array
+    public function transform(ActivityDomainJob $entity): array
     {
         $response = [
-            'object' => 'ActivityDomain',
+            'object' => 'ActivityDomainJob',
             'id' => $entity->getHashedKey(),
+            'activity_domain_id' => Hashids::encode($entity->activity_domain_id),
             'name' => $entity->name,
         ];
 
@@ -36,10 +38,5 @@ class ActivityDomainTransformer extends Transformer
         ], $response);
 
         return $response;
-    }
-
-    public function includeJobs(ActivityDomain $activityDomain): Collection
-    {
-        return $this->collection($activityDomain->jobs, new ActivityDomainJobTransformer());
     }
 }

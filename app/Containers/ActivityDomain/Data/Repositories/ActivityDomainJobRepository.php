@@ -5,9 +5,9 @@ namespace App\Containers\ActivityDomain\Data\Repositories;
 use App\Ship\Parents\Repositories\Repository;
 
 /**
- * Class ActivityDomainRepository
+ * Class ActivityDomainJobsRepository
  */
-class ActivityDomainRepository extends Repository
+class ActivityDomainJobRepository extends Repository
 {
     /**
      * @var array

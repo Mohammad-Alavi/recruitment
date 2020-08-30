@@ -9,12 +9,9 @@ class CreateActivityDomainsTable extends Migration
     public function up(): void
     {
         Schema::create('activity_domains', static function (Blueprint $table) {
-
             $table->increments('id');
-
+            $table->string('name');
             $table->timestamps();
-            //$table->softDeletes();
-
         });
     }
 

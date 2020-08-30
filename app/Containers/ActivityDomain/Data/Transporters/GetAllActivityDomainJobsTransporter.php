@@ -4,7 +4,7 @@ namespace App\Containers\ActivityDomain\Data\Transporters;
 
 use App\Ship\Parents\Transporters\Transporter;
 
-class FindActivityDomainByIdTransporter extends Transporter
+class GetAllActivityDomainJobsTransporter extends Transporter
 {
 
     /**
@@ -18,10 +18,10 @@ class FindActivityDomainByIdTransporter extends Transporter
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

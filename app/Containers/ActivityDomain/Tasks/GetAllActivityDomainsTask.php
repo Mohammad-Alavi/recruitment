@@ -8,7 +8,7 @@ use App\Ship\Parents\Tasks\Task;
 class GetAllActivityDomainsTask extends Task
 {
 
-    protected $repository;
+    protected ActivityDomainRepository $repository;
 
     public function __construct(ActivityDomainRepository $repository)
     {
@@ -17,6 +17,6 @@ class GetAllActivityDomainsTask extends Task
 
     public function run()
     {
-        return $this->repository->paginate();
+        return $this->repository->all();
     }
 }

@@ -2,16 +2,14 @@
 
 namespace App\Containers\ActivityDomain\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\ActivityDomain\Data\Transporters\GetAllActivityDomainsTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class GetAllActivityDomainsAction extends Action
 {
-    public function run(Request $request)
+    public function run(GetAllActivityDomainsTransporter $request)
     {
-        $activitydomains = Apiato::call('ActivityDomain@GetAllActivityDomainsTask', [], ['addRequestCriteria']);
-
-        return $activitydomains;
+        return Apiato::call('ActivityDomain@GetAllActivityDomainsTask', []);
     }
 }
