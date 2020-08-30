@@ -1,0 +1,6 @@
+{
+  "name": "apiato/job",
+  "description": "Job Container for apiato.",
+  "require": {
+  }
+}
