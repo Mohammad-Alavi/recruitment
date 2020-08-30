@@ -2,6 +2,7 @@
 
 namespace App\Containers\DesiredJob\UI\API\Requests;
 
+use App\Containers\DesiredJob\Data\Transporters\UpdateDesiredJobTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class UpdateDesiredJobRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\DesiredJob\Data\Transporters\UpdateDesiredJobTransporter::class;
+    protected $transporter = UpdateDesiredJobTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class UpdateDesiredJobRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,8 @@ class UpdateDesiredJobRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'desired_job_id',
     ];
 
     /**
@@ -43,24 +45,22 @@ class UpdateDesiredJobRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'desired_job_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'desired_job_id' => 'required|exists:desired_jobs,id',
+            'activity_domain_id' => 'exists:activity_domains,id',
+            'activity_domain_job_id' => 'exists:activity_domain_jobs,id',
+            'ready_date' => 'date_format:Ymd',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

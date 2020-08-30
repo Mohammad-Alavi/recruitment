@@ -2,16 +2,14 @@
 
 namespace App\Containers\DesiredJob\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\DesiredJob\Data\Transporters\GetAllDesiredJobsTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class GetAllDesiredJobsAction extends Action
 {
-    public function run(Request $request)
+    public function run(GetAllDesiredJobsTransporter $request)
     {
-        $desiredjobs = Apiato::call('DesiredJob@GetAllDesiredJobsTask', [], ['addRequestCriteria']);
-
-        return $desiredjobs;
+        return Apiato::call('DesiredJob@GetAllDesiredJobsTask', [$request->user_id]);
     }
 }

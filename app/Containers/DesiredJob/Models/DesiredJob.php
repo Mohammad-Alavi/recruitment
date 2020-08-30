@@ -2,13 +2,13 @@
 
 namespace App\Containers\DesiredJob\Models;
 
+use App\Containers\User\Models\User;
 use App\Ship\Parents\Models\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DesiredJob extends Model
 {
-    protected $fillable = [
-
-    ];
+    protected $guarded = [];
 
     protected $attributes = [
 
@@ -31,4 +31,9 @@ class DesiredJob extends Model
      * A resource key to be used by the the JSON API Serializer responses.
      */
     protected $resourceKey = 'desiredjobs';
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

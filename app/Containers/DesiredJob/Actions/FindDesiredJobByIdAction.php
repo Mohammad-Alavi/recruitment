@@ -2,16 +2,14 @@
 
 namespace App\Containers\DesiredJob\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\DesiredJob\Data\Transporters\FindDesiredJobByIdTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class FindDesiredJobByIdAction extends Action
 {
-    public function run(Request $request)
+    public function run(FindDesiredJobByIdTransporter $request)
     {
-        $desiredjob = Apiato::call('DesiredJob@FindDesiredJobByIdTask', [$request->id]);
-
-        return $desiredjob;
+        return Apiato::call('DesiredJob@FindDesiredJobByIdTask', [$request->desired_job_id]);
     }
 }

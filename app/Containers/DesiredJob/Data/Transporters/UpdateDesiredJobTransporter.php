@@ -14,14 +14,18 @@ class UpdateDesiredJobTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'desired_job_id',
+            'activity_domain_id',
+            'activity_domain_job_id',
+            'ready_date',
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
+            'desired_job_id'
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

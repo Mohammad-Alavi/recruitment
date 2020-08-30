@@ -4,26 +4,20 @@
  * @apiGroup           DesiredJob
  * @apiName            getAllDesiredJobs
  *
- * @api                {GET} /v1/desired-job Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v1/users/:user_id/desired_jobs Get All Desired Jobs
+ * @apiDescription     Get All Desired Jobs of a User
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      Authenticated
  *
- * @apiParam           {String}  parameters here..
- *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * @apiUse             DesiredJobsSuccessMultipleResponse
  */
 
 /** @var Route $router */
-$router->get('desired-job', [
-    'as' => 'api_desiredjob_get_all_desired_jobs',
-    'uses'  => 'Controller@getAllDesiredJobs',
+$router->get('users/{user_id}/desired_jobs', [
+    'as' => 'api_desired_job_get_all_desired_jobs',
+    'uses' => 'Controller@getAllDesiredJobs',
     'middleware' => [
-      'auth:api',
+        'auth:api',
     ],
 ]);

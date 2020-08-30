@@ -2,20 +2,21 @@
 
 namespace App\Containers\DesiredJob\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\DesiredJob\Data\Transporters\CreateDesiredJobTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class CreateDesiredJobAction extends Action
 {
-    public function run(Request $request)
+    public function run(CreateDesiredJobTransporter $request)
     {
         $data = $request->sanitizeInput([
-            // add your request data here
+            'user_id',
+            'activity_domain_id',
+            'activity_domain_job_id',
+            'ready_date',
         ]);
 
-        $desiredjob = Apiato::call('DesiredJob@CreateDesiredJobTask', [$data]);
-
-        return $desiredjob;
+        return Apiato::call('DesiredJob@CreateDesiredJobTask', [$data]);
     }
 }

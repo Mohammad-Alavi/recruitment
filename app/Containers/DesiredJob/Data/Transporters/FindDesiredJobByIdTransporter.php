@@ -14,14 +14,15 @@ class FindDesiredJobByIdTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'desired_job_id'
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
+            'desired_job_id'
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

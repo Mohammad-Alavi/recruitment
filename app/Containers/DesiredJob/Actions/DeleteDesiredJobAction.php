@@ -2,14 +2,14 @@
 
 namespace App\Containers\DesiredJob\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\DesiredJob\Data\Transporters\DeleteDesiredJobTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class DeleteDesiredJobAction extends Action
 {
-    public function run(Request $request)
+    public function run(DeleteDesiredJobTransporter $request)
     {
-        return Apiato::call('DesiredJob@DeleteDesiredJobTask', [$request->id]);
+        return Apiato::call('DesiredJob@DeleteDesiredJobTask', [$request->desired_job_id]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Containers\DesiredJob\UI\API\Requests;
 
+use App\Containers\DesiredJob\Data\Transporters\GetAllDesiredJobsTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class GetAllDesiredJobsRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\DesiredJob\Data\Transporters\GetAllDesiredJobsTransporter::class;
+    protected $transporter = GetAllDesiredJobsTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class GetAllDesiredJobsRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,7 @@ class GetAllDesiredJobsRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
     ];
 
     /**
@@ -43,24 +44,17 @@ class GetAllDesiredJobsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',
