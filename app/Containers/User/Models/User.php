@@ -16,19 +16,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * Class User.
  *
  * @author Mahmoud Zalt <mahmoud@zalt.me>
  */
-class User extends UserModel implements ChargeableInterface
+class User extends UserModel implements ChargeableInterface, HasMedia
 {
 
     use ChargeableTrait;
     use AuthorizationTrait;
     use AuthenticationTrait;
     use Notifiable;
+    use InteractsWithMedia;
 
     /**
      * The database table used by the model.
@@ -99,11 +104,31 @@ class User extends UserModel implements ChargeableInterface
         'remember_token',
     ];
 
+    /**
+     * @param Media|null $media
+     * @throws InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width((int)config('user-container.avatar.thumb.width'))
+            ->height((int)'user-container.avatar.thumb.height')
+            ->keepOriginalImageFormat()
+            ->nonQueued()
+            ->performOnCollections('avatar');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->useFallbackPath(public_path('/images/default-avatar.svg'))
+            ->singleFile();
+    }
+
     public function paymentAccounts(): HasMany
     {
         return $this->hasMany(PaymentAccount::class);
     }
-
 
     public function country(): BelongsTo
     {

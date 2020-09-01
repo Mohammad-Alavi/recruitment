@@ -77,7 +77,7 @@ class Controller extends ApiController
     public function getAuthenticatedUser(GetAuthenticatedUserRequest $request): array
     {
         $user = Apiato::call('User@GetAuthenticatedUserAction');
-        return $this->transform($user, UserPrivateProfileTransformer::class);
+        return $this->transform($user, UserTransformer::class);
     }
 
     public function resetPassword(ResetPasswordRequest $request): JsonResponse

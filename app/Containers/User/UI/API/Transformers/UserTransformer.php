@@ -41,7 +41,14 @@ class UserTransformer extends Transformer
             'confirmed' => $user->confirmed,
             'gender' => $user->gender,
             'birth' => $user->birth,
-
+            'images' => [
+                'avatar' => empty($user->getFirstMediaUrl('avatar')) ?
+                    config('dastranj.storage_path') . config('dastranj.default.avatar') :
+                    config('dastranj.storage_path') . str_replace(config('dastranj.storage_path_replace'), '', $user->getFirstMediaUrl('avatar')),
+                'avatar_thumb' => empty($user->getFirstMediaUrl('avatar')) ?
+                    config('dastranj.storage_path') . config('dastranj.default.avatar_thumb') :
+                    config('dastranj.storage_path') . str_replace(config('dastranj.storage_path_replace'), '', $user->getFirstMedia('avatar')->getUrl('thumb')),
+            ],
             'social_auth_provider' => $user->social_provider,
             'social_id' => $user->social_id,
             'social_avatar' => [

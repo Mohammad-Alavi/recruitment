@@ -45,4 +45,11 @@ return [
             'doctorate',
         ],
     ],
+
+    'avatar' => [
+        'thumb' => [
+            'width' => 200,
+            'height' => 200,
+        ],
+    ],
 ];

@@ -18,6 +18,7 @@
  * @apiParam           {String="social_media,website,friend,street_ads,divar"}  [method_of_introduction]
  * @apiParam           {String="none,diploma,associate_degree,bachelor_degree,master_degree,doctorate"}  [last_educational_certificate]
  * @apiParam           {String}  [field_of_study] min:2|max:150
+ * @apiParam           {image}  [avatar]
  *
  * @apiUse             UserSuccessSingleResponse
  */

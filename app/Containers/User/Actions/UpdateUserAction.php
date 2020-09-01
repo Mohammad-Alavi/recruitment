@@ -34,6 +34,7 @@ class UpdateUserAction extends Action
             'social_expires_in',
             'social_refresh_token',
             'social_token_secret',
+            'avatar'
         ]);
 
         return Apiato::call('User@UpdateUserTask', [$userData, $data->id]);

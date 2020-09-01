@@ -27,6 +27,7 @@ class UpdateUserTransporter extends Transporter
             'method_of_introduction',
 			'device',
 			'platform',
+            'avatar'
 			// allow for undefined properties
 			// 'additionalProperties' => true,
 		],

@@ -48,6 +48,7 @@ class UpdateUserRequest extends Request
             'last_educational_certificate' => 'in:' . $allowedEducationalCertificates,
             'field_of_study' => 'min:2|max:150',
             'method_of_introduction' => 'in:' . $allowedMethodOfIntroductions,
+            'avatar'    => 'image|max:1024',
         ];
     }
 
