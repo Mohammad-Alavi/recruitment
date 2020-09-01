@@ -1,37 +1,38 @@
 <?php
 
-namespace App\Containers\DesiredJob\UI\API\Tests\Functional;
+namespace App\Containers\Address\UI\API\Tests\Functional;
 
-use App\Containers\DesiredJob\Tests\ApiTestCase;
-use Illuminate\Support\Carbon;
+use App\Containers\Address\Tests\ApiTestCase;
 
 /**
- * Class CreateDesiredJobTest.
+ * Class CreateAddressTest.
  *
- * @group desired-job
+ * @group address
  * @group api
  */
-class CreateDesiredJobTest extends ApiTestCase
+class CreateAddressTest extends ApiTestCase
 {
-    protected $endpoint = 'post@v1/users/{user_id}/desired-jobs';
+    protected $endpoint = 'post@v1/users/{user_id}/addresses';
 
-    public function testCreateNewDesiredJobAsAnOwner(): void
+    public function testCreateNewAddressAsAnOwner(): void
     {
         $this->getTestingUser();
 
         $data = [
             'user_id' => $this->testingUser->id,
-            'activity_domain_id' => 1,
-            'activity_domain_job_id' => 1,
-            'ready_date' => '20070505',
+            'address' => 'کوی گارگر',
+            'province_id' => 2,
+            'city_id' => 47,
         ];
 
         $response = $this->injectId($this->testingUser->id, false, '{user_id}')->makeCall($data);
 
+        // assert the response status
         $response->assertStatus(201);
 
+        // assert returned address is the updated one
         $this->assertResponseContainKeyValue([
-            'object' => 'DesiredJob',
+            'object' => 'Address',
         ]);
 
         foreach ($data as $key => $value) {
@@ -41,15 +42,9 @@ class CreateDesiredJobTest extends ApiTestCase
                 ]);
                 continue;
             }
-            if ($key === 'activity_domain_id' || $key === 'activity_domain_job_id') {
+            if ($key === 'province_id' || $key === 'city_id') {
                 $this->assertResponseContainKeyValue([
                     $key => $this->encode($data[$key]),
-                ]);
-                continue;
-            }
-            if ($key === 'ready_date') {
-                $this->assertResponseContainKeyValue([
-                    $key => Carbon::createFromFormat('Ymd', $data[$key])->toDateString(),
                 ]);
                 continue;
             }
@@ -59,15 +54,14 @@ class CreateDesiredJobTest extends ApiTestCase
         }
 
         $responseContent = $this->getResponseContentObject();
-
         $this->assertNotEmpty($responseContent->data);
 
         foreach ($data as $key => $value) {
-            $this->assertDatabaseHas('desired_jobs', [$key => $data[$key]]);
+            $this->assertDatabaseHas('addresses', [$key => $data[$key]]);
         }
     }
 
-    public function testCreateNewDesiredJobWithoutRequiredFields(): void
+    public function testCreateNewAddressWithoutRequiredFields(): void
     {
         $this->getTestingUser();
 
@@ -75,9 +69,9 @@ class CreateDesiredJobTest extends ApiTestCase
 
         $response->assertStatus(422);
         $this->assertValidationErrorContain([
-            'activity_domain_id' => 'The activity domain id field is required.',
-            'activity_domain_job_id' => 'The activity domain job id field is required.',
-            'ready_date' => 'The ready date field is required.',
+            'address' => 'The address field is required.',
+            'province_id' => 'The province id field is required.',
+            'city_id' => 'The city id field is required.',
         ]);
     }
 }

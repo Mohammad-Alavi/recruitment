@@ -6,6 +6,7 @@ use App\Containers\DesiredJob\Actions\UpdateDesiredJobAction;
 use App\Containers\DesiredJob\Data\Transporters\UpdateDesiredJobTransporter;
 use App\Containers\DesiredJob\Models\DesiredJob;
 use App\Containers\DesiredJob\Tests\TestCase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -34,6 +35,6 @@ class UpdateDesiredJobTest extends TestCase
         $this->assertEquals($categoryNewData['desired_job_id'], $updatedDesiredJob->id);
         $this->assertEquals($categoryNewData['activity_domain_id'], $updatedDesiredJob->activity_domain_id);
         $this->assertEquals($categoryNewData['activity_domain_job_id'], $updatedDesiredJob->activity_domain_job_id);
-        $this->assertEquals($categoryNewData['ready_date'], $updatedDesiredJob->ready_date);
+        $this->assertEquals(Carbon::createFromFormat('Ymd', $categoryNewData['ready_date'])->toDateString(), $updatedDesiredJob->ready_date);
     }
 }

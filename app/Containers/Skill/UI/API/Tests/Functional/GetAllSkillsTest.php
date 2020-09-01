@@ -25,7 +25,7 @@ class GetAllSkillsTest extends ApiTestCase
             ->makeCall();
 
         $response->assertStatus(200);
-dd($response);
+
         $responseContent = $this->getResponseContentObject();
 
         $this->assertCount(4, $responseContent->data);

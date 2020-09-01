@@ -4,6 +4,7 @@ namespace App\Containers\DesiredJob\UI\API\Tests\Functional;
 
 use App\Containers\DesiredJob\Models\DesiredJob;
 use App\Containers\DesiredJob\Tests\ApiTestCase;
+use Illuminate\Support\Carbon;
 
 /**
  * Class FindDesiredJobByIdTest.
@@ -74,7 +75,7 @@ class FindDesiredJobByIdTest extends ApiTestCase
 
         $this->assertResponseContainKeyValue([
             'id' => $this->encode($desiredJob->id),
-            'ready_date' => $desiredJob->ready_date,
+            'ready_date' => Carbon::createFromFormat('Ymd', $desiredJob->ready_date)->toDateString(),
             'activity_domain_id' => $this->encode($desiredJob->activity_domain_id),
             'activity_domain_job_id' => $this->encode($desiredJob->activity_domain_job_id),
         ]);
