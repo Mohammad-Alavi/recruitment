@@ -2,74 +2,50 @@
 
 namespace App\Containers\WorkExperience\UI\API\Controllers;
 
+use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\WorkExperience\Data\Transporters\CreateWorkExperienceTransporter;
+use App\Containers\WorkExperience\Data\Transporters\DeleteWorkExperienceTransporter;
+use App\Containers\WorkExperience\Data\Transporters\FindWorkExperienceByIdTransporter;
+use App\Containers\WorkExperience\Data\Transporters\GetAllWorkExperiencesTransporter;
+use App\Containers\WorkExperience\Data\Transporters\UpdateWorkExperienceTransporter;
 use App\Containers\WorkExperience\UI\API\Requests\CreateWorkExperienceRequest;
 use App\Containers\WorkExperience\UI\API\Requests\DeleteWorkExperienceRequest;
-use App\Containers\WorkExperience\UI\API\Requests\GetAllWorkExperiencesRequest;
 use App\Containers\WorkExperience\UI\API\Requests\FindWorkExperienceByIdRequest;
+use App\Containers\WorkExperience\UI\API\Requests\GetAllWorkExperiencesRequest;
 use App\Containers\WorkExperience\UI\API\Requests\UpdateWorkExperienceRequest;
 use App\Containers\WorkExperience\UI\API\Transformers\WorkExperienceTransformer;
 use App\Ship\Parents\Controllers\ApiController;
-use Apiato\Core\Foundation\Facades\Apiato;
+use Illuminate\Http\JsonResponse;
 
-/**
- * Class Controller
- *
- * @package App\Containers\WorkExperience\UI\API\Controllers
- */
 class Controller extends ApiController
 {
-    /**
-     * @param CreateWorkExperienceRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function createWorkExperience(CreateWorkExperienceRequest $request)
+    public function createWorkExperience(CreateWorkExperienceRequest $request): JsonResponse
     {
-        $workexperience = Apiato::call('WorkExperience@CreateWorkExperienceAction', [$request]);
-
-        return $this->created($this->transform($workexperience, WorkExperienceTransformer::class));
+        $workExperience = Apiato::call('WorkExperience@CreateWorkExperienceAction', [new CreateWorkExperienceTransporter($request)]);
+        return $this->created($this->transform($workExperience, WorkExperienceTransformer::class));
     }
 
-    /**
-     * @param FindWorkExperienceByIdRequest $request
-     * @return array
-     */
-    public function findWorkExperienceById(FindWorkExperienceByIdRequest $request)
+    public function findWorkExperienceById(FindWorkExperienceByIdRequest $request): array
     {
-        $workexperience = Apiato::call('WorkExperience@FindWorkExperienceByIdAction', [$request]);
-
-        return $this->transform($workexperience, WorkExperienceTransformer::class);
+        $workExperience = Apiato::call('WorkExperience@FindWorkExperienceByIdAction', [new FindWorkExperienceByIdTransporter($request)]);
+        return $this->transform($workExperience, WorkExperienceTransformer::class);
     }
 
-    /**
-     * @param GetAllWorkExperiencesRequest $request
-     * @return array
-     */
-    public function getAllWorkExperiences(GetAllWorkExperiencesRequest $request)
+    public function getAllWorkExperiences(GetAllWorkExperiencesRequest $request): array
     {
-        $workexperiences = Apiato::call('WorkExperience@GetAllWorkExperiencesAction', [$request]);
-
-        return $this->transform($workexperiences, WorkExperienceTransformer::class);
+        $workExperiences = Apiato::call('WorkExperience@GetAllWorkExperiencesAction', [new GetAllWorkExperiencesTransporter($request)]);
+        return $this->transform($workExperiences, WorkExperienceTransformer::class);
     }
 
-    /**
-     * @param UpdateWorkExperienceRequest $request
-     * @return array
-     */
-    public function updateWorkExperience(UpdateWorkExperienceRequest $request)
+    public function updateWorkExperience(UpdateWorkExperienceRequest $request): array
     {
-        $workexperience = Apiato::call('WorkExperience@UpdateWorkExperienceAction', [$request]);
-
-        return $this->transform($workexperience, WorkExperienceTransformer::class);
+        $workExperience = Apiato::call('WorkExperience@UpdateWorkExperienceAction', [new UpdateWorkExperienceTransporter($request)]);
+        return $this->transform($workExperience, WorkExperienceTransformer::class);
     }
 
-    /**
-     * @param DeleteWorkExperienceRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function deleteWorkExperience(DeleteWorkExperienceRequest $request)
+    public function deleteWorkExperience(DeleteWorkExperienceRequest $request): JsonResponse
     {
-        Apiato::call('WorkExperience@DeleteWorkExperienceAction', [$request]);
-
+        Apiato::call('WorkExperience@DeleteWorkExperienceAction', [new DeleteWorkExperienceTransporter($request)]);
         return $this->noContent();
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Containers\WorkExperience\UI\API\Requests;
 
+use App\Containers\WorkExperience\Data\Transporters\UpdateWorkExperienceTransporter;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class UpdateWorkExperienceRequest.
@@ -15,7 +17,7 @@ class UpdateWorkExperienceRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\WorkExperience\Data\Transporters\UpdateWorkExperienceTransporter::class;
+    protected $transporter = UpdateWorkExperienceTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +26,7 @@ class UpdateWorkExperienceRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +35,8 @@ class UpdateWorkExperienceRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'work_experience_id',
     ];
 
     /**
@@ -43,24 +46,30 @@ class UpdateWorkExperienceRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'work_experience_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
+        $availableTerminationReasons = implode(',', Config::get('work-experience-container.available_activity_termination_reason'));
+
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'work_experience_id' => 'required|exists:work_experiences,id',
+            'work_place_name' => 'min:2|max:50',
+            'type_of_work' => 'min:2|max:50',
+            'work_duration_year' => 'integer|min:0|max:40',
+            'work_duration_month' => 'integer|min:0|max:12',
+            'insurance_duration_year' => 'integer|min:0|max:40',
+            'insurance_duration_month' => 'integer|min:0|max:12',
+            'activity_termination_reason' => 'in:' . $availableTerminationReasons,
+            'employer_name' => 'min:2|max:50',
+            'employer_number' => 'string',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

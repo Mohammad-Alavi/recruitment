@@ -14,14 +14,15 @@ class GetAllWorkExperiencesTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'user_id'
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
+            'user_id'
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

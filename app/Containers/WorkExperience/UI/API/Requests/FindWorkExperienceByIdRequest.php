@@ -2,6 +2,7 @@
 
 namespace App\Containers\WorkExperience\UI\API\Requests;
 
+use App\Containers\WorkExperience\Data\Transporters\FindWorkExperienceByIdTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class FindWorkExperienceByIdRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\WorkExperience\Data\Transporters\FindWorkExperienceByIdTransporter::class;
+    protected $transporter = FindWorkExperienceByIdTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class FindWorkExperienceByIdRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,8 @@ class FindWorkExperienceByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'work_experience_id',
     ];
 
     /**
@@ -43,7 +45,8 @@ class FindWorkExperienceByIdRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'work_experience_id',
     ];
 
     /**
@@ -52,8 +55,8 @@ class FindWorkExperienceByIdRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'work_experience_id' => 'required|exists:work_experiences,id',
         ];
     }
 

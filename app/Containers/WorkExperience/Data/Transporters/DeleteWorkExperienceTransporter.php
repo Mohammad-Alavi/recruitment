@@ -14,11 +14,12 @@ class DeleteWorkExperienceTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'work_experience_id'
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
         'required'   => [
+            'work_experience_id'
             // define the properties that MUST be set
         ],
         'default'    => [

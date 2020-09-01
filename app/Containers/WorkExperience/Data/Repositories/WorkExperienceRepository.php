@@ -15,7 +15,7 @@ class WorkExperienceRepository extends Repository
      */
     protected $fieldSearchable = [
         'id' => '=',
-        // ...
+        'work_place_name' => '=',
     ];
 
 }

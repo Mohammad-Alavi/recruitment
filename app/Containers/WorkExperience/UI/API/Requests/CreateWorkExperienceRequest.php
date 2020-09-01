@@ -2,7 +2,9 @@
 
 namespace App\Containers\WorkExperience\UI\API\Requests;
 
+use App\Containers\WorkExperience\Data\Transporters\CreateWorkExperienceTransporter;
 use App\Ship\Parents\Requests\Request;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class CreateWorkExperienceRequest.
@@ -15,7 +17,7 @@ class CreateWorkExperienceRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\WorkExperience\Data\Transporters\CreateWorkExperienceTransporter::class;
+    protected $transporter = CreateWorkExperienceTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -33,7 +35,7 @@ class CreateWorkExperienceRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+         'user_id',
     ];
 
     /**
@@ -43,24 +45,28 @@ class CreateWorkExperienceRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+         'user_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
+        $availableTerminationReasons = implode(',', Config::get('work-experience-container.available_activity_termination_reason'));
+
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'work_place_name' => 'required|min:2|max:50',
+            'type_of_work' => 'required|min:2|max:50',
+            'work_duration_year' => 'required|integer|min:0|max:40',
+            'work_duration_month' => 'required|integer|min:0|max:12',
+            'insurance_duration_year' => 'required|integer|min:0|max:40',
+            'insurance_duration_month' => 'required|integer|min:0|max:12',
+            'activity_termination_reason' => 'required|in:' . $availableTerminationReasons,
+            'employer_name' => 'required|min:2|max:50',
+            'employer_number' => 'required|string',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

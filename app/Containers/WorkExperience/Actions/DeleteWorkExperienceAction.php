@@ -2,14 +2,14 @@
 
 namespace App\Containers\WorkExperience\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\WorkExperience\Data\Transporters\DeleteWorkExperienceTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class DeleteWorkExperienceAction extends Action
 {
-    public function run(Request $request)
+    public function run(DeleteWorkExperienceTransporter $request)
     {
-        return Apiato::call('WorkExperience@DeleteWorkExperienceTask', [$request->id]);
+        return Apiato::call('WorkExperience@DeleteWorkExperienceTask', [$request->work_experience_id]);
     }
 }

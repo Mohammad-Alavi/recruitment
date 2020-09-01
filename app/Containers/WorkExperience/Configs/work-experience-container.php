@@ -10,5 +10,9 @@ return [
     |
     |
     */
-
+    'available_activity_termination_reason' => [
+        'end_of_contract',
+        'resignation',
+        'lay_off',
+    ]
 ];

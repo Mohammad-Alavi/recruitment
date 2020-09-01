@@ -4,24 +4,20 @@
  * @apiGroup           WorkExperience
  * @apiName            findWorkExperienceById
  *
- * @api                {GET} /v1/users/:user_id/work-experiences/:id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {GET} /v1/users/:user_id/work-experiences/:work_experience_id Find Work Experience By ID
+ * @apiDescription     Find Work Experience By Id
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      Authenticated
  *
  * @apiParam           {String}  parameters here..
  *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * @apiUse             WorkExperienceSuccessSingleResponse
  */
 
 /** @var Route $router */
-$router->get('users/{user_id}/work-experiences/{id}', [
-    'as' => 'api_workexperience_find_work_experience_by_id',
+$router->get('users/{user_id}/work-experiences/{work_experience_id}', [
+    'as' => 'api_work_experience_find_work_experience_by_id',
     'uses'  => 'Controller@findWorkExperienceById',
     'middleware' => [
       'auth:api',

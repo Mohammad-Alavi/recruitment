@@ -2,6 +2,7 @@
 
 namespace App\Containers\WorkExperience\UI\API\Requests;
 
+use App\Containers\WorkExperience\Data\Transporters\DeleteWorkExperienceTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class DeleteWorkExperienceRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\WorkExperience\Data\Transporters\DeleteWorkExperienceTransporter::class;
+    protected $transporter = DeleteWorkExperienceTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class DeleteWorkExperienceRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,8 @@ class DeleteWorkExperienceRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'work_experience_id',
     ];
 
     /**
@@ -43,24 +45,19 @@ class DeleteWorkExperienceRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'work_experience_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'work_experience_id' => 'required|exists:work_experiences,id',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

@@ -2,16 +2,14 @@
 
 namespace App\Containers\WorkExperience\Actions;
 
-use App\Ship\Parents\Actions\Action;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\WorkExperience\Data\Transporters\FindWorkExperienceByIdTransporter;
+use App\Ship\Parents\Actions\Action;
 
 class FindWorkExperienceByIdAction extends Action
 {
-    public function run(Request $request)
+    public function run(FindWorkExperienceByIdTransporter $request)
     {
-        $workexperience = Apiato::call('WorkExperience@FindWorkExperienceByIdTask', [$request->id]);
-
-        return $workexperience;
+        return Apiato::call('WorkExperience@FindWorkExperienceByIdTask', [$request->work_experience_id]);
     }
 }
