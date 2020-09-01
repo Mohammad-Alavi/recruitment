@@ -10,6 +10,8 @@ class LocationSeeder_1 extends Seeder
 {
     public function run(): void
     {
+//        if(env('APP_ENV') === 'testing') return;
+
         $locationsArray = array (
             0 =>
                 array (

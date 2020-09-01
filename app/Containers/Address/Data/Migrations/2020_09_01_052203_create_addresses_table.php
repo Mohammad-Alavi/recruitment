@@ -10,8 +10,12 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', static function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->text('address')->nullable();
+            $table->unsignedInteger('province_id');
+            $table->unsignedInteger('city_id');
             $table->timestamps();
-            //$table->softDeletes();
         });
     }
 

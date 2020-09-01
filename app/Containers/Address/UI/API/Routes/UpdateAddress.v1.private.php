@@ -4,23 +4,21 @@
  * @apiGroup           Address
  * @apiName            updateAddress
  *
- * @api                {PATCH} /v1/addresses/:id Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {PATCH} /v1/users/:user_id/addresses/:address_id Update Address
+ * @apiDescription     Update Address
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      Authenticated
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam           {String} address min:5|max:400,
+ * @apiParam           {String} province_id exists:locations,id,
+ * @apiParam           {String} city_id exists:locations,id,
  *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * @apiUse             AddressSuccessSingleResponse
  */
 
 /** @var Route $router */
-$router->patch('addresses/{id}', [
+$router->patch('users/{user_id}/addresses/{address_id}', [
     'as' => 'api_address_update_address',
     'uses'  => 'Controller@updateAddress',
     'middleware' => [

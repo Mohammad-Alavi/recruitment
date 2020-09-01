@@ -4,23 +4,21 @@
  * @apiGroup           Address
  * @apiName            createAddress
  *
- * @api                {POST} /v1/addresses Endpoint title here..
- * @apiDescription     Endpoint description here..
+ * @api                {POST} /v1/users/:user_id/addresses Create Address
+ * @apiDescription     Create an Address for the User
  *
  * @apiVersion         1.0.0
- * @apiPermission      none
+ * @apiPermission      Authenticated
  *
- * @apiParam           {String}  parameters here..
+ * @apiParam           {String} address required|min:5|max:400,
+ * @apiParam           {String} province_id required|exists:locations,id,
+ * @apiParam           {String} city_id required|exists:locations,id,
  *
- * @apiSuccessExample  {json}  Success-Response:
- * HTTP/1.1 200 OK
-{
-  // Insert the response of the request here...
-}
+ * @apiUse             AddressSuccessSingleResponse
  */
 
 /** @var Route $router */
-$router->post('addresses', [
+$router->post('users/{user_id}/addresses', [
     'as' => 'api_address_create_address',
     'uses'  => 'Controller@createAddress',
     'middleware' => [

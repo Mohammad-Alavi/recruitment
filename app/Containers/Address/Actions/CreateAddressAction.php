@@ -11,7 +11,10 @@ class CreateAddressAction extends Action
     public function run(CreateAddressTransporter $request)
     {
         $data = $request->sanitizeInput([
-            // add your request data here
+            'user_id',
+            'address',
+            'province_id',
+            'city_id',
         ]);
 
         return Apiato::call('Address@CreateAddressTask', [$data]);

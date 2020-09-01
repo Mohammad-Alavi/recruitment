@@ -12,7 +12,7 @@ $factory->define(Skill::class, function (Faker $faker) {
 	return [
 		'name' => $faker->word,
         'skill_level' => $faker->randomElement(Config::get('skill-container.skill_levels')),
-        'from_date' => '2008909',
+        'from_date' => '20080909',
         'to_date' => '20091010',
 		'user_id' => static function () {
 			return factory(User::class)->create()->id;

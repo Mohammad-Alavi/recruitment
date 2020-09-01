@@ -7,6 +7,7 @@ use App\Containers\DesiredJob\Data\Transporters\CreateDesiredJobTransporter;
 use App\Containers\DesiredJob\Models\DesiredJob;
 use App\Containers\DesiredJob\Tests\TestCase;
 use App\Ship\Exceptions\CreateResourceFailedException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -34,7 +35,11 @@ class CreateDesiredJobTest extends TestCase
 
 		$this->assertInstanceOf(DesiredJob::class, $desiredJob);
 		foreach ($data as $key => $value) {
-			$this->assertEquals($desiredJob->$key, $data[$key]);
+		    if ($key === 'ready_date') {
+		        $this->assertEquals(Carbon::createFromFormat('Ymd', $data[$key])->toDateString(), $desiredJob->$key);
+		        continue;
+            }
+			$this->assertEquals($data[$key], $desiredJob->$key);
 		}
 
 		$this->assertTrue($desiredJob->user()->exists());

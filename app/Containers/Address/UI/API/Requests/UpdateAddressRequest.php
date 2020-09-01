@@ -2,6 +2,7 @@
 
 namespace App\Containers\Address\UI\API\Requests;
 
+use App\Containers\Address\Data\Transporters\UpdateAddressTransporter;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -15,7 +16,7 @@ class UpdateAddressRequest extends Request
      *
      * @var string
      */
-    protected $transporter = \App\Containers\Address\Data\Transporters\UpdateAddressTransporter::class;
+    protected $transporter = UpdateAddressTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -24,7 +25,7 @@ class UpdateAddressRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -33,7 +34,8 @@ class UpdateAddressRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'user_id',
+        'address_id',
     ];
 
     /**
@@ -43,24 +45,22 @@ class UpdateAddressRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        // 'id',
+        'user_id',
+        'address_id',
     ];
 
-    /**
-     * @return  array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            // 'id' => 'required',
-            // '{user-input}' => 'required|max:255',
+            'user_id' => 'required|exists:users,id',
+            'address_id' => 'required|exists:addresses,id',
+            'address' => 'min:5|max:400',
+            'province_id' => 'exists:locations,id',
+            'city_id' => 'exists:locations,id',
         ];
     }
 
-    /**
-     * @return  bool
-     */
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->check([
             'hasAccess',

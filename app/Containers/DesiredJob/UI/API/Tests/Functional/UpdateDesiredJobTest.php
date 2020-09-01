@@ -4,6 +4,7 @@ namespace App\Containers\DesiredJob\UI\API\Tests\Functional;
 
 use App\Containers\DesiredJob\Models\DesiredJob;
 use App\Containers\DesiredJob\Tests\ApiTestCase;
+use Illuminate\Support\Carbon;
 
 /**
  * Class UpdateDesiredJobTest.
@@ -39,7 +40,7 @@ class UpdateDesiredJobTest extends ApiTestCase
             'object' => 'DesiredJob',
             'activity_domain_id' => $this->encode($data['activity_domain_id']),
             'activity_domain_job_id' => $this->encode($data['activity_domain_job_id']),
-            'ready_date' => $data['ready_date'],
+            'ready_date' => Carbon::createFromFormat('Ymd', $data['ready_date'])->toDateString(),
         ]);
         foreach ($data as $key => $value) {
             $this->assertDatabaseHas('desired_jobs', [$key => $data[$key]]);

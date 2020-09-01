@@ -2,6 +2,7 @@
 
 namespace App\Containers\User\Models;
 
+use App\Containers\Address\Models\Address;
 use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
 use App\Containers\Country\Models\Country;
@@ -13,6 +14,7 @@ use App\Containers\Skill\Models\Skill;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -116,5 +118,10 @@ class User extends UserModel implements ChargeableInterface
     public function desiredJobs(): HasMany
     {
         return $this->hasMany(DesiredJob::class);
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(Address::class);
     }
 }

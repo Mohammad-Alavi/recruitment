@@ -10,7 +10,7 @@ use Exception;
 class UpdateAddressTask extends Task
 {
 
-    protected $repository;
+    protected AddressRepository $repository;
 
     public function __construct(AddressRepository $repository)
     {
@@ -23,7 +23,7 @@ class UpdateAddressTask extends Task
             return $this->repository->update($data, $id);
         }
         catch (Exception $exception) {
-            throw new UpdateResourceFailedException();
+            throw new UpdateResourceFailedException($exception->getMessage());
         }
     }
 }

@@ -10,14 +10,18 @@ class UpdateAddressTransporter extends Transporter
         'type' => 'object',
         'properties' => [
             // enter all properties here
-
+            'address_id',
+            'address',
+            'province_id',
+            'city_id',
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],
-        'required'   => [
+        'required' => [
             // define the properties that MUST be set
+            'address_id'
         ],
-        'default'    => [
+        'default' => [
             // provide default values for specific properties here
         ]
     ];

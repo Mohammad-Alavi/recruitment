@@ -21,7 +21,7 @@ class Controller extends ApiController
 
     public function updateAddress(UpdateAddressRequest $request): array
     {
-        $address = Apiato::call('Address@UpdateAddressAction', [new UpdateAddressTransporter()]);
+        $address = Apiato::call('Address@UpdateAddressAction', [new UpdateAddressTransporter($request)]);
         return $this->transform($address, AddressTransformer::class);
     }
 }
