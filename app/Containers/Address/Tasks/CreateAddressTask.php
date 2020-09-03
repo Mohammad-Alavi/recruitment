@@ -3,6 +3,7 @@
 namespace App\Containers\Address\Tasks;
 
 use App\Containers\Address\Data\Repositories\AddressRepository;
+use App\Containers\User\Models\User;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
@@ -17,13 +18,19 @@ class CreateAddressTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(array $data)
+    public function run(int $userId, array $data)
     {
+        $user = User::find($userId);
+        throw_if($user === null, CreateResourceFailedException::class);
+        $address = $user->address;
+        if ($address !== null) {
+            return $address;
+        }
+
         try {
             return $this->repository->create($data);
-        }
-        catch (Exception $exception) {
-            throw new CreateResourceFailedException($exception->getMessage());
+        } catch (Exception $exception) {
+            throw new CreateResourceFailedException();
         }
     }
 }

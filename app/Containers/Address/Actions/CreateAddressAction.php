@@ -17,6 +17,6 @@ class CreateAddressAction extends Action
             'city_id',
         ]);
 
-        return Apiato::call('Address@CreateAddressTask', [$data]);
+        return Apiato::call('Address@CreateAddressTask', [$request->user_id, $data]);
     }
 }

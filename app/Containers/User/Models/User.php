@@ -7,6 +7,7 @@ use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
 use App\Containers\Country\Models\Country;
 use App\Containers\DesiredJob\Models\DesiredJob;
+use App\Containers\HealthSelfDeclaration\Models\HealthSelfDeclaration;
 use App\Containers\Payment\Contracts\ChargeableInterface;
 use App\Containers\Payment\Models\PaymentAccount;
 use App\Containers\Payment\Traits\ChargeableTrait;
@@ -145,8 +146,13 @@ class User extends UserModel implements ChargeableInterface, HasMedia
         return $this->hasMany(DesiredJob::class);
     }
 
-    public function user(): HasOne
+    public function address(): HasOne
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function healthSelfDeclaration(): HasOne
+    {
+        return $this->hasOne(HealthSelfDeclaration::class);
     }
 }
