@@ -2,10 +2,17 @@
 
 namespace App\Containers\User\UI\API\Transformers;
 
+use App\Containers\Address\UI\API\Transformers\AddressTransformer;
 use App\Containers\Authorization\UI\API\Transformers\RoleTransformer;
+use App\Containers\DesiredJob\UI\API\Transformers\DesiredJobTransformer;
+use App\Containers\EducationalBackground\UI\API\Transformers\EducationalBackgroundTransformer;
+use App\Containers\HealthSelfDeclaration\UI\API\Transformers\HealthSelfDeclarationTransformer;
+use App\Containers\Skill\UI\API\Transformers\SkillTransformer;
 use App\Containers\User\Models\User;
+use App\Containers\WorkExperience\UI\API\Transformers\WorkExperienceTransformer;
 use App\Ship\Parents\Transformers\Transformer;
 use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\Item;
 
 /**
  * Class UserTransformer.
@@ -16,10 +23,21 @@ class UserTransformer extends Transformer
 {
     protected $availableIncludes = [
         'roles',
+        'DesiredJobs',
+        'WorkExperiences',
+        'EducationalBackgrounds',
+        'Skills',
+        'Address',
+        'HealthSelfDeclaration',
     ];
 
     protected $defaultIncludes = [
-
+        'DesiredJobs',
+        'WorkExperiences',
+        'EducationalBackgrounds',
+        'Skills',
+        'Address',
+        'HealthSelfDeclaration',
     ];
 
     public function transform(User $user): array
@@ -75,4 +93,33 @@ class UserTransformer extends Transformer
         return $this->collection($user->roles, new RoleTransformer());
     }
 
+    public function includeDesiredJobs(User $user): Collection
+    {
+        return $this->collection($user->desiredJobs, new DesiredJobTransformer());
+    }
+
+    public function includeWorkExperiences(User $user): Collection
+    {
+        return $this->collection($user->workExperience, new WorkExperienceTransformer());
+    }
+
+    public function includeEducationalBackgrounds(User $user): Collection
+    {
+        return $this->collection($user->educationalBackground, new EducationalBackgroundTransformer());
+    }
+
+    public function includeSkills(User $user): Collection
+    {
+        return $this->collection($user->skills, new SkillTransformer());
+    }
+
+    public function includeAddress(User $user): ?Item
+    {
+        return $this->item($user->address, new AddressTransformer());
+    }
+
+    public function includeHealthSelfDeclaration(User $user): ?Item
+    {
+        return $this->item($user->healthSelfDeclaration, new HealthSelfDeclarationTransformer());
+    }
 }

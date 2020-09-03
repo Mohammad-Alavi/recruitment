@@ -7,11 +7,13 @@ use App\Containers\Authorization\Traits\AuthenticationTrait;
 use App\Containers\Authorization\Traits\AuthorizationTrait;
 use App\Containers\Country\Models\Country;
 use App\Containers\DesiredJob\Models\DesiredJob;
+use App\Containers\EducationalBackground\Models\EducationalBackground;
 use App\Containers\HealthSelfDeclaration\Models\HealthSelfDeclaration;
 use App\Containers\Payment\Contracts\ChargeableInterface;
 use App\Containers\Payment\Models\PaymentAccount;
 use App\Containers\Payment\Traits\ChargeableTrait;
 use App\Containers\Skill\Models\Skill;
+use App\Containers\WorkExperience\Models\WorkExperience;
 use App\Ship\Parents\Models\UserModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -148,11 +150,21 @@ class User extends UserModel implements ChargeableInterface, HasMedia
 
     public function address(): HasOne
     {
-        return $this->hasOne(Address::class);
+        return $this->hasOne(Address::class)->withDefault();
     }
 
     public function healthSelfDeclaration(): HasOne
     {
-        return $this->hasOne(HealthSelfDeclaration::class);
+        return $this->hasOne(HealthSelfDeclaration::class)->withDefault();
+    }
+
+    public function educationalBackground(): HasMany
+    {
+        return $this->hasMany(EducationalBackground::class);
+    }
+
+    public function workExperience(): HasMany
+    {
+        return $this->hasMany(WorkExperience::class);
     }
 }
