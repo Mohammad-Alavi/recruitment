@@ -30,7 +30,7 @@ class CountryTransformer extends Transformer
     {
         $response = [
             'object' => 'Country',
-            'id' => $entity->getHashedKey(),
+            'id' => $entity->id,
             'name' => $entity->name,
         ];
 
