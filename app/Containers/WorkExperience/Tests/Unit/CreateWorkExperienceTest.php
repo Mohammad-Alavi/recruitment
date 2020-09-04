@@ -31,6 +31,7 @@ class CreateWorkExperienceTest extends TestCase
             'activity_termination_reason' => 'resignation',
             'employer_name' => 'Fag System',
             'employer_number' => '09391079907',
+            'consent_text' => 'من قبول دارم به مولا',
         ];
 
         $transporter = new CreateWorkExperienceTransporter($data);
@@ -61,6 +62,7 @@ class CreateWorkExperienceTest extends TestCase
             'activity_termination_reason' => 'resignation',
             'employer_name' => 'Fag System',
             'employer_number' => '09391079907',
+            'consent_text' => 'من قبول دارم به مولا',
         ];
 
         $transporter = new CreateWorkExperienceTransporter($data);

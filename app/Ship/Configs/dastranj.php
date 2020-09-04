@@ -2,8 +2,8 @@
 
 return [
     'default'   => [
-        'avatar'    =>  '/default_images/avatar.png',
-        'avatar_thumb'    =>  '/default_images/avatar_thumb.png',
+        'avatar'    =>  '/images/default-avatar.svg',
+        'avatar_thumb'    =>  '/images/default-avatar.svg',
     ],
 
     'storage_path' => env('API_URL', 'http://localhost') . '/v1/storage',

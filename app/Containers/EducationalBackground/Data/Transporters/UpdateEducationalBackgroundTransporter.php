@@ -19,6 +19,7 @@ class UpdateEducationalBackgroundTransporter extends Transporter
             'degree',
             'graduation_place',
             'grade_point_average',
+            'photo',
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],

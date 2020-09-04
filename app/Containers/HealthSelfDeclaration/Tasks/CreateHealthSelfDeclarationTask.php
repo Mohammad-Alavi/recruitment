@@ -22,7 +22,7 @@ class CreateHealthSelfDeclarationTask extends Task
         $user = User::find($userId);
         throw_if($user === null, CreateResourceFailedException::class);
         $HSD = $user->healthSelfDeclaration;
-        if ($HSD !== null) {
+        if ($HSD->created_at !== null) {
             return $HSD;
         }
 

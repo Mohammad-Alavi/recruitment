@@ -47,7 +47,7 @@ class CreateHealthSelfDeclarationTest extends TestCase
         $healthSelfDeclaration = $action->run($transporter);
 
         $this->assertInstanceOf(HealthSelfDeclaration::class, $healthSelfDeclaration);
-        $this->assertEquals($healthSelfDeclaration->blood_type, $data['blood_type']);
+        $this->assertEquals($data['blood_type'], $healthSelfDeclaration->blood_type);
         $this->assertEquals($healthSelfDeclaration->health_options, json_encode($data['health_options'], JSON_THROW_ON_ERROR));
         $this->assertTrue($healthSelfDeclaration->user()->exists());
     }

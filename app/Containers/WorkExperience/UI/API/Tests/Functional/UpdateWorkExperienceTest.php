@@ -35,6 +35,7 @@ class UpdateWorkExperienceTest extends ApiTestCase
             'activity_termination_reason' => 'resignation',
             'employer_name' => 'Fag System',
             'employer_number' => '09391079907',
+            'consent_text' => '09391079907',
         ];
 
         $response = $this->injectId($this->testingUser->id, false, '{user_id}')
@@ -53,6 +54,7 @@ class UpdateWorkExperienceTest extends ApiTestCase
             'activity_termination_reason' => $data['activity_termination_reason'],
             'employer_name' => $data['employer_name'],
             'employer_number' => $data['employer_number'],
+            'consent_text' => $data['consent_text'],
         ]);
 
         foreach ($data as $key => $value) {

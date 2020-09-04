@@ -14,6 +14,7 @@
  * @apiParam           {String} graduation_place min:2|max:50
  * @apiParam           {String="diploma,associate_degree,bachelor_degree,master_degree,doctorate"} degree
  * @apiParam           {String} grade_point_average numeric|min:0|max:20
+ * @apiParam           {image}  [photo]
  *
  * @apiUse             EducationalBackgroundSuccessSingleResponse
  */

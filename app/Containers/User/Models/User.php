@@ -124,7 +124,6 @@ class User extends UserModel implements ChargeableInterface, HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')
-            ->useFallbackPath(public_path('/images/default-avatar.svg'))
             ->singleFile();
     }
 

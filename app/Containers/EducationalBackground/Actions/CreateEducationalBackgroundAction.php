@@ -16,6 +16,7 @@ class CreateEducationalBackgroundAction extends Action
             'degree',
             'graduation_place',
             'grade_point_average',
+            'photo',
         ]);
 
         return Apiato::call('EducationalBackground@CreateEducationalBackgroundTask', [$data]);

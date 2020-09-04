@@ -17,8 +17,10 @@
  * @apiParam           {String} insurance_duration_year required|integer|min:0|max:40
  * @apiParam           {String} insurance_duration_month required|integer|min:0|max:12
  * @apiParam           {String="end_of_contract,resignation,lay_off"} activity_termination_reason required
- * @apiParam           {String} employer_name required|min:2|max:50
- * @apiParam           {String} employer_number required|string
+ * @apiParam           {String} employer_name min:2|max:50
+ * @apiParam           {String} employer_number string
+ * @apiParam           {String} consent_text min:2|max:300
+ * @apiParam           {image}  [consent_photo]
  *
  * @apiUse             WorkExperienceSuccessSingleResponse
  */

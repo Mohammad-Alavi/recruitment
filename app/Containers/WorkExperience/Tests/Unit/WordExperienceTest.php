@@ -24,6 +24,7 @@ class WordExperienceTest extends TestCase
             'insurance_duration_year',
             'insurance_duration_month',
             'activity_termination_reason',
+            'consent_text',
             'employer_name',
             'employer_number',
         ];

@@ -30,6 +30,7 @@ class UpdateWorkExperienceTest extends TestCase
             'activity_termination_reason' => 'resignation',
             'employer_name' => 'Fag System',
             'employer_number' => '09391079907',
+            'consent_text' => 'من قبول دارم به مولا',
         ];
 
         $transporter = new UpdateWorkExperienceTransporter($WorkExperienceNewData);
@@ -46,5 +47,6 @@ class UpdateWorkExperienceTest extends TestCase
         $this->assertEquals($WorkExperienceNewData['activity_termination_reason'], $updatedWorkExperience->activity_termination_reason);
         $this->assertEquals($WorkExperienceNewData['employer_name'], $updatedWorkExperience->employer_name);
         $this->assertEquals($WorkExperienceNewData['employer_number'], $updatedWorkExperience->employer_number);
+        $this->assertEquals($WorkExperienceNewData['consent_text'], $updatedWorkExperience->consent_text);
     }
 }

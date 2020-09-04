@@ -12,6 +12,7 @@ $factory->define(WorkExperience::class, static function (Faker $faker) {
 	return [
         'activity_termination_reason' => $faker->randomElement(Config::get('work-experience-container.available_activity_termination_reason')),
         'work_place_name' => $faker->word,
+        'consent_text' => $faker->realText(),
         'type_of_work' => $faker->word,
         'work_duration_year' => random_int(0,40),
         'work_duration_month' => random_int(0,12),

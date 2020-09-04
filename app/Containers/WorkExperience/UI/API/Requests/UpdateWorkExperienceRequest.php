@@ -66,6 +66,8 @@ class UpdateWorkExperienceRequest extends Request
             'activity_termination_reason' => 'in:' . $availableTerminationReasons,
             'employer_name' => 'min:2|max:50',
             'employer_number' => 'string',
+            'consent_text' => 'min:2|max:300',
+            'consent_photo' => 'image|max:1024',
         ];
     }
 

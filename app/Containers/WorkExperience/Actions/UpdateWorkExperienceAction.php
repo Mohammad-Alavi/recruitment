@@ -20,6 +20,8 @@ class UpdateWorkExperienceAction extends Action
             'activity_termination_reason',
             'employer_name',
             'employer_number',
+            'consent_photo',
+            'consent_text',
         ]);
 
         return Apiato::call('WorkExperience@UpdateWorkExperienceTask', [$request->work_experience_id, $data]);

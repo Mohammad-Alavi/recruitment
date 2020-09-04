@@ -39,6 +39,15 @@ class WorkExperienceTransformer extends Transformer
             'activity_termination_reason' => $entity->activity_termination_reason,
             'employer_name' => $entity->employer_name,
             'employer_number' => $entity->employer_number,
+            'consent_text' => $entity->consent_text,
+            'images' => [
+                'consent_photo' => empty($entity->getFirstMediaUrl('work-xp')) ?
+                    null :
+                    config('dastranj.storage_path') . str_replace(config('dastranj.storage_path_replace'), '', $entity->getFirstMediaUrl('work-xp')),
+                'consent_photo_thumb' => empty($entity->getFirstMediaUrl('work-xp')) ?
+                    null :
+                    config('dastranj.storage_path') . str_replace(config('dastranj.storage_path_replace'), '', $entity->getFirstMedia('work-xp')->getUrl('thumb')),
+            ],
             'created_at' => $entity->created_at,
             'updated_at' => $entity->updated_at,
         ];

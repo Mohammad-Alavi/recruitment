@@ -6,6 +6,8 @@ use App\Containers\EducationalBackground\Data\Repositories\EducationalBackground
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Request;
 
 class CreateEducationalBackgroundTask extends Task
 {
@@ -20,10 +22,21 @@ class CreateEducationalBackgroundTask extends Task
     public function run(array $data)
     {
         try {
-            return $this->repository->create($data);
+            $photo = null;
+            if (array_key_exists('photo', $data)) {
+                $photo = $data['photo'];
+                unset($data['photo']);
+            }
+            $educationalBackground = $this->repository->create($data);
+            if ($photo !== null) {
+                $educationalBackground->addMediaFromRequest('photo')
+                    ->usingFileName(md5((Request::file('photo')->getClientOriginalName() . Carbon::now()->toTimeString())) . '.' . Request::file('photo')->getClientOriginalExtension())
+                    ->toMediaCollection('edu-bg');
+            }
+        } catch (Exception $exception) {
+            throw new CreateResourceFailedException($exception->getMessage());
         }
-        catch (Exception $exception) {
-            throw new CreateResourceFailedException();
-        }
+
+        return $educationalBackground;
     }
 }

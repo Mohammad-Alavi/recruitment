@@ -19,6 +19,8 @@
  * @apiParam           {String="end_of_contract,resignation,lay_off"} activity_termination_reason
  * @apiParam           {String} employer_name min:2|max:50
  * @apiParam           {String} employer_number string
+ * @apiParam           {String} consent_text min:2|max:300
+ * @apiParam           {image}  [consent_photo]
  *
  * @apiUse             WorkExperienceSuccessSingleResponse
  */

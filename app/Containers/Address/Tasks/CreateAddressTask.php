@@ -23,7 +23,7 @@ class CreateAddressTask extends Task
         $user = User::find($userId);
         throw_if($user === null, CreateResourceFailedException::class);
         $address = $user->address;
-        if ($address !== null) {
+        if ($address->created_at !== null) {
             return $address;
         }
 

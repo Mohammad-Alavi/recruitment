@@ -29,6 +29,7 @@ class CreateWorkExperienceTest extends ApiTestCase
             'activity_termination_reason' => 'resignation',
             'employer_name' => 'Fag System',
             'employer_number' => '09391079907',
+            'consent_text' => 'consent_text',
         ];
 
         $response = $this->injectId($this->testingUser->id, false, '{user_id}')->makeCall($data);

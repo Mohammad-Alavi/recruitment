@@ -34,6 +34,14 @@ class EducationalBackgroundTransformer extends Transformer
             'degree' => $entity->degree,
             'graduation_place' => $entity->graduation_place,
             'grade_point_average' => $entity->grade_point_average,
+            'images' => [
+                'photo' => empty($entity->getFirstMediaUrl('edu-bg')) ?
+                    null :
+                    config('dastranj.storage_path') . str_replace(config('dastranj.storage_path_replace'), '', $entity->getFirstMediaUrl('edu-bg')),
+                'photo_thumb' => empty($entity->getFirstMediaUrl('edu-bg')) ?
+                    null :
+                    config('dastranj.storage_path') . str_replace(config('dastranj.storage_path_replace'), '', $entity->getFirstMedia('edu-bg')->getUrl('thumb')),
+            ],
             'created_at' => $entity->created_at,
             'updated_at' => $entity->updated_at,
         ];

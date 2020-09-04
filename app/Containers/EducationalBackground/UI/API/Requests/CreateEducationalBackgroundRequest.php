@@ -58,6 +58,7 @@ class CreateEducationalBackgroundRequest extends Request
             'degree' => 'required|in:' . $availableDegrees,
             'graduation_place' => 'required|min:2|max:50',
             'grade_point_average' => 'required|numeric|min:0|max:20',
+            'photo'    => 'image|max:1024',
         ];
     }
 

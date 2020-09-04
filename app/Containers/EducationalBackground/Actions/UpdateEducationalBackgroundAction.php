@@ -15,6 +15,7 @@ class UpdateEducationalBackgroundAction extends Action
             'degree',
             'graduation_place',
             'grade_point_average',
+            'photo',
         ]);
 
         return Apiato::call('EducationalBackground@UpdateEducationalBackgroundTask', [$request->educational_background_id, $data]);

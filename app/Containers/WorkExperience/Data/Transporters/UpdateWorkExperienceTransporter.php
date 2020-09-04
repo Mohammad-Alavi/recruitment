@@ -24,6 +24,8 @@ class UpdateWorkExperienceTransporter extends Transporter
             'activity_termination_reason',
             'employer_name',
             'employer_number',
+            'consent_photo',
+            'consent_text',
             // allow for undefined properties
             // 'additionalProperties' => true,
         ],

@@ -19,8 +19,9 @@ class CreateWorkExperiencesTable extends Migration
             $table->integer('insurance_duration_year');
             $table->integer('insurance_duration_month');
             $table->string('activity_termination_reason');
-            $table->string('employer_name');
-            $table->string('employer_number');
+            $table->text('consent_text')->nullable();
+            $table->string('employer_name')->nullable();
+            $table->string('employer_number')->nullable();
             $table->timestamps();
             //$table->softDeletes();
         });

@@ -61,6 +61,7 @@ class UpdateEducationalBackgroundRequest extends Request
             'degree' => 'in:' . $availableDegrees,
             'graduation_place' => 'min:2|max:50',
             'grade_point_average' => 'numeric|min:0|max:20',
+            'photo'    => 'image|max:1024',
         ];
     }
 

@@ -26,7 +26,7 @@ class CreateWorkExperienceRequest extends Request
      */
     protected $access = [
         'permissions' => '',
-        'roles'       => '',
+        'roles' => '',
     ];
 
     /**
@@ -35,7 +35,7 @@ class CreateWorkExperienceRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'user_id',
+        'user_id',
     ];
 
     /**
@@ -45,7 +45,7 @@ class CreateWorkExperienceRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-         'user_id',
+        'user_id',
     ];
 
     public function rules(): array
@@ -61,8 +61,10 @@ class CreateWorkExperienceRequest extends Request
             'insurance_duration_year' => 'required|integer|min:0|max:40',
             'insurance_duration_month' => 'required|integer|min:0|max:12',
             'activity_termination_reason' => 'required|in:' . $availableTerminationReasons,
-            'employer_name' => 'required|min:2|max:50',
-            'employer_number' => 'required|string',
+            'employer_name' => 'min:2|max:50',
+            'employer_number' => 'string',
+            'consent_text' => 'min:2|max:300',
+            'consent_photo' => 'image|max:1024',
         ];
     }
 
